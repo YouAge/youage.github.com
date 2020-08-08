@@ -1,0 +1,2396 @@
+<!DOCTYPE html>
+<html>
+<head hexo-theme='https://volantis.js.org/#3.0-beta2'>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="J168966tuJ" />
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- 页面元数据 -->
+  
+  <title>前端常考的问题 - 逸枫</title>
+  
+    <meta name="keywords" content="css,javaScript,vue,React,html">
+  
+
+  
+    <meta name="description" content="vue相关的问题汇总
+vue组件通信有哪些？
+vue组件通信有好几种方法，具体介绍工作中常用的方法父子组件直接的通信，props $emit/$on父组件向子组件通信， 只需要 父组件中绑定响应方法， 子组件通过 props 直接接收使用即可，子组件向父组件通信，    - 子组件上面绑定一个事件方法， 方法中通...">
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+    
+      <meta name="msapplication-TileColor" content="#ffffff">
+    
+      <meta name="msapplication-config" content="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/browserconfig.xml">
+    
+      <meta name="theme-color" content="#ffffff">
+    
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13/css/all.min.css">
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+
+  
+
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/favicon/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
+  
+
+  
+
+  <!-- import link -->
+  
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/favicon-16x16.png">
+  <link rel="manifest" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/site.webmanifest">
+  <link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/favicon.ico">
+  
+
+  
+  
+    
+<link rel="stylesheet" href="/css/style.css">
+
+  
+
+  
+  
+</head>
+
+<body>
+  
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post' style="display: none;">
+      <div class='cover-body'>
+  <div class='a'>
+    
+      <img no-lazy class='logo' src='/img/logo.png'/>
+    
+    
+      <p class="title">欢迎光临，逸枫驿站！</p>
+    
+
+  </div>
+    
+        <span class="subtitle">让我们一起守护，十年之约...</span>
+    
+  <div class='b'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="世界之大，探索一下..." />
+          <i class="icon fas fa-search fa-fw"></i>
+        </form>
+      </div>
+    
+    <div class='menu navigation search'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <i class='fas fa-home fa-fw fa-fw'></i><p>主页</p>
+            </a>
+          
+            <a href="/blog/categories/"
+              
+              
+              id="blogcategories">
+              <i class='fas fa-folder-open fa-fw'></i><p>分类</p>
+            </a>
+          
+            <a href="/blog/tags/"
+              
+              
+              id="blogtags">
+              <i class='fas fa-tags fa-fw'></i><p>标签</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <i class='fas fa-archive fa-fw'></i><p>归档</p>
+            </a>
+          
+            <a href="/blog/link/"
+              
+              
+              id="bloglink">
+              <i class='fas fa-link fa-fw'></i><p>友链</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <i class='fas fa-info-circle fa-fw'></i><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+    </cover>
+    <header class="l_header shadow blur">
+  <div class='container'>
+  <div class='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a class="s-comment fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='/img/logo.png'/>
+          
+          
+          
+           <span>逸枫</span>
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-home fa-fw fa-fw'></i>首页
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/categories/
+                  
+                  
+                  
+                    id="blogcategories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/tags/
+                  
+                  
+                  
+                    id="blogtags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/link/
+                  
+                  
+                  
+                    id="bloglink"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>更多
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=https://github.com/YouAge/youage.github.com
+                  
+                  
+                  
+                    id="https:githubcomYouAgeyouagegithubcom"
+                  >
+                  主题源码
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" 
+                  
+                  
+                  >
+                  有疑问？
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=/faqs/
+                  
+                  
+                  
+                    id="faqs"
+                  >
+                  看 FAQ
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=https://github.com/YouAge/MyHexoBlog/tree/master/hexo-theme-volantis
+                  
+                  
+                  
+                    id="https:githubcomYouAgeMyHexoBlogtreemasterhexo-theme-volantis"
+                  >
+                  看 本站源码
+                </a>
+                
+              </li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              
+                <li>
+                  <a class="menuitem flat-box">
+                    <i class='fas fa-compact-disc fa-fw music'></i>背景音乐
+                  </a>
+                  <ul class="list-v">
+                    <li>
+                      <div class="aplayer-container">
+                        
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='533953408'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+                      </div>
+                    </li>
+                  </ul>
+                <li>
+              
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-home fa-fw fa-fw'></i>首页
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/categories/
+                  
+                  
+                  
+                    id="blogcategories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/tags/
+                  
+                  
+                  
+                    id="blogtags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/link/
+                  
+                  
+                  
+                    id="bloglink"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>更多
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=https://github.com/YouAge/youage.github.com
+                  
+                  
+                  
+                    id="https:githubcomYouAgeyouagegithubcom"
+                  >
+                  主题源码
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" 
+                  
+                  
+                  >
+                  有疑问？
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=/faqs/
+                  
+                  
+                  
+                    id="faqs"
+                  >
+                  看 FAQ
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=https://github.com/YouAge/MyHexoBlog/tree/master/hexo-theme-volantis
+                  
+                  
+                  
+                    id="https:githubcomYouAgeMyHexoBlogtreemasterhexo-theme-volantis"
+                  >
+                  看 本站源码
+                </a>
+                
+              </li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+  </div>
+  
+
+
+  <div class="l_body nocover">
+    <div class='body-wrapper' id="pjax-container">
+      
+        <!--此文件用来存放一些不方便取值的变量--> 
+<!--思路大概是将值藏到重加载的区域内--> 
+ 
+ 
+ 
+<div id="pjax-data" style="display: none"> 
+  <div id="pjax-ispage">true</div> 
+  <div id="pjax-pageTitle">前端常考的问题</div> 
+  <div id="pjax-enable-cover">true</div> 
+  <div id="pjax-comment-path">none</div> 
+  <div id="pjax-comment-placeholder">none</div> 
+</div> 
+ 
+ 
+<script> 
+  // 处理封面 此时 jquery 还没加载 
+  if ("none" == "none") { // 移除封面 
+    document.getElementsByClassName('cover')[0].style.display = "none"; 
+    document.getElementsByClassName('l_body')[0].classList.add("nocover"); 
+    document.getElementsByClassName('l_header', 'cover-wrapper')[0].classList.add("show"); 
+  } else { 
+    if ("none" == "blog") { // 半屏 
+      document.getElementsByClassName('cover')[0].classList.remove("full"); 
+      document.getElementsByClassName('cover')[0].classList.add("half"); 
+      document.getElementsByClassName('scroll-down')[0].style.display = "none"; 
+    } else if ("none" == "docs") { // 全屏 
+      document.getElementsByClassName('cover')[0].classList.remove("half"); 
+      document.getElementsByClassName('cover')[0].classList.add("full"); 
+      document.getElementsByClassName('scroll-down')[0].style.display = ""; 
+    } 
+    document.getElementsByClassName('cover')[0].style.display = ""; 
+    document.getElementsByClassName('l_body', 'show')[0].classList.remove("nocover"); 
+    document.getElementsByClassName('l_header', 'cover-wrapper')[0].classList.remove("show"); 
+  } 
+</script> 
+
+      
+      
+
+<div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box reveal shadow article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+      
+      
+      <div class="meta" id="header-meta">
+        
+          
+  <h1 class="title">
+    <a href="/archives/a5104644.html">
+      前端常考的问题
+    </a>
+  </h1>
+
+
+        
+        <div class='new-meta-box'>
+          
+            
+          
+            
+              
+<div class='new-meta-item author'>
+  <a class='author' href="" rel="nofollow">
+    <img no-lazy src="">
+    <p></p>
+  </a>
+</div>
+
+            
+          
+            
+              
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/%E5%89%8D%E7%AB%AF/' rel="nofollow">
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <p>前端</p>
+    </a>
+  </div>
+
+
+            
+          
+            
+              <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2020年1月20日</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+
+            
+          
+        </div>
+        
+          <hr>
+        
+      </div>
+    
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          
+          <h2 id="vue相关的问题汇总"><a href="#vue相关的问题汇总" class="headerlink" title="vue相关的问题汇总"></a>vue相关的问题汇总</h2><hr>
+<h4 id="vue组件通信有哪些？"><a href="#vue组件通信有哪些？" class="headerlink" title="vue组件通信有哪些？"></a>vue组件通信有哪些？</h4><blockquote>
+<p>vue组件通信有好几种方法，具体介绍工作中常用的方法<br>父子组件直接的通信，<code>props $emit/$on</code><br>父组件向子组件通信， 只需要 父组件中绑定响应方法， 子组件通过 <code>props</code> 直接接收使用即可，<br>子组件向父组件通信，<br>    - 子组件上面绑定一个事件方法， 方法中通过 <code>this.$emit(&#39;自定义事件名&#39;，&#39;传递的参数&#39;)</code><br>    - 父组件中需要接收 <code>v-on:自定义事件名=</code> 来获取数据<br>子组件向父组件通信，<code>$emit/$on</code> 订阅者发布则模式， 实现 兄弟之间通信</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> Event=<span class="keyword">new</span> Vue(); <span class="comment">// 创建一个消息队列</span></span><br><span class="line">Event.$emit(事件名,数据); <span class="comment">// 子组件发送事件</span></span><br><span class="line">Event.$on(事件名,<span class="function"><span class="params">data</span> =&gt;</span> &#123;&#125;); <span class="comment">// 父组件接收</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<blockquote>
+<p><strong>Vuex</strong>实现各个组件之间的通信<br>简单点的理解就是 vuex类似第三方的数据管理，a,b,c..等待组件 只用调用vuex，就可以获取和修改上面的数据，这样就实现了通信</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 模块化管理 Vuex</span></span><br><span class="line"><span class="comment">// 用户信息模块，user.js </span></span><br><span class="line"><span class="keyword">const</span> user = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state:&#123;</span><br><span class="line">        <span class="comment">// 存放状态，变量数据</span></span><br><span class="line">        loginStartus:<span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    getters:&#123;</span><br><span class="line">    <span class="comment">//  加工 state成员给外界，，自带2个参数， state，getters</span></span><br><span class="line">     <span class="comment">//  通过: 参数， state.获取state中的变量， 通过getters. 调用自己内部其它的方法</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mutations:&#123;</span><br><span class="line">    <span class="comment">// 同步 操作 数据</span></span><br><span class="line">        login(state)&#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    actions:&#123;</span><br><span class="line">    <span class="comment">// 用来异步操作数据，套装了 mutations，</span></span><br><span class="line">     <span class="comment">/* 带2个参数， context：上下文</span></span><br><span class="line"><span class="comment">        payload 挂在参数</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    modules:&#123;</span><br><span class="line">        user</span><br><span class="line">        <span class="comment">// 模块化的方式很多， 具体可以看业务需求来弄 &#123;&#125;的形式调用</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Vuex数据持久化"><a href="#Vuex数据持久化" class="headerlink" title="Vuex数据持久化"></a>Vuex数据持久化</h4><blockquote>
+<p>解答： 通过vuex-persistedstate 这个插件来完成本地数据存储，从而实现刷新后 state仍然存在</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vuexPres = <span class="keyword">new</span> VuexPersistence(&#123; </span><br><span class="line">    storage: <span class="built_in">window</span>.localStorage,</span><br><span class="line">    reducer: <span class="function"><span class="params">state</span>=&gt;</span>(&#123;</span><br><span class="line">    user:state.user</span><br><span class="line">&#125;)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;  </span><br><span class="line">state,actions,</span><br><span class="line">mutations,</span><br><span class="line">plugins:[vuexPres.plugin]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Vue的声明周期，各个阶段都干啥的"><a href="#Vue的声明周期，各个阶段都干啥的" class="headerlink" title="Vue的声明周期，各个阶段都干啥的"></a>Vue的声明周期，各个阶段都干啥的</h4><blockquote>
+<p>8个声明周期，如图<br><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="/images/vue/vue%E5%88%9B%E5%BB%BA%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt="Vue声明周期"></p>
+</blockquote>
+<h4 id="vue响应式原理"><a href="#vue响应式原理" class="headerlink" title="vue响应式原理"></a>vue响应式原理</h4><blockquote>
+<p>浅谈一下： vue2.x响应式的底层使用的方法 <code>Object.defineProperty()</code> 消息劫持方式 该方法中存在一个getter和setter的可选项，可以对属性值的获取和设置造成影响<br>Vue中编写了一个 <code>wather</code> 来监听处理数据， 再使用 <code>getter</code>时，会通知water实力对view层渲染页面<br>在使用 setter方法时， 总会在变值的同时， 通知<code>wather</code>实例对view层更新<br>–  Object.defineProperty() 方法只部分支持IE9，所以Vue兼容IE版本最低为IE9</p>
+</blockquote>
+<h4 id="v-on可以绑定多个函数吗？"><a href="#v-on可以绑定多个函数吗？" class="headerlink" title="v-on可以绑定多个函数吗？"></a>v-on可以绑定多个函数吗？</h4><blockquote>
+<p>可以</p>
+</blockquote>
+<h4 id="路由钩子函数"><a href="#路由钩子函数" class="headerlink" title="路由钩子函数"></a>路由钩子函数</h4><blockquote>
+<p>全局的构造函数 <code>beforeEach(to,from,next)</code><br>针对单个路由钩子函数 <code>beforeEnter(to,from,next)</code><br>组件钩子函数 <code>beforRouteEnter(to,from,next)</code>   这个路由钩子函数比生命周期beforeCreate函数先执行，所以this实例还没有创建出来</p>
+</blockquote>
+<ul>
+<li>next() 不写的话，不会跳转，</li>
+</ul>
+<h4 id="sessionStorage-localStorage-cookie-的区别"><a href="#sessionStorage-localStorage-cookie-的区别" class="headerlink" title="sessionStorage localStorage cookie 的区别"></a>sessionStorage localStorage cookie 的区别</h4><blockquote>
+<p>他们的区别： 都是保存在浏览器端的，</p>
+<ul>
+<li>localStorage是永久缓存， 不主动删掉数据，数据不会消失，数据存储大小可以达到5m以上， 不同浏览器不同，在所有同源窗口中都是共享的；cookie也是在所有同源窗口中都是共享的。</li>
+<li>sessionStorage 的生命周期是仅在当前会话下有效。sessionStorage 引入了一个“浏览器窗口”的概念，sessionStorage 是在同源的窗口中始终存在的数据。只要这个浏览器窗口没有关闭，即使刷新页面或者进入同源另一个页面，数据依然存在。但是 sessionStorage 在关闭了浏览器窗口后就会被销毁。同时独立的打开同一个窗口同一个页面，sessionStorage 也是不一样的</li>
+</ul>
+</blockquote>
+<ul>
+<li>cookie生命期为只在设置的cookie过期时间之前一直有效，即使窗口或浏览器关闭。 存放数据大小为4K左右, 有个数限制（各浏览器不同），一般不能超过20个。缺点是不能储存大数据且不易读取</li>
+</ul>
+<h4 id="computed和watch的区别"><a href="#computed和watch的区别" class="headerlink" title="computed和watch的区别"></a>computed和watch的区别</h4><blockquote>
+<p>computed: </p>
+<ol>
+<li>支持缓存，只有依赖数据发生改变，才会重新进行计算</li>
+<li>不支持异步，当computed内有异步操作时无效，无法监听数据的变化</li>
+<li>computed 属性值会默认走缓存，计算属性是基于它们的响应式依赖进行缓存的，也就是基于data中声明过或者父组件传递的props中的数据通过计算得到的值</li>
+<li>如果一个属性是由其他属性计算而来的，这个属性依赖其他属性，是一个多对一或者一对一，一般用computed</li>
+<li>如果computed属性属性值是函数，那么默认会走get方法；函数的返回值就是属性的属性值；在computed中的，属性都有一个get和一个set方法，当数据变化时，调用set方法。监听函数内部<br>watch</li>
+</ol>
+</blockquote>
+<ol>
+<li>不支持缓存，数据变，直接会触发相应的操作；</li>
+<li>watch支持异步；</li>
+<li>监听的函数接收两个参数，第一个参数是最新的值；第二个参数是输入之前的值；</li>
+<li>当一个属性发生变化时，需要执行对应的操作；一对多；</li>
+<li>监听数据必须是data中声明过或者父组件传递过来的props中的数据，当数据变化时，触发其他操作，函数有两个参数，<br>　　immediate：组件加载立即触发回调函数执行，<br>　　deep: 深度监听，为了发现对象内部值的变化，复杂类型的数据时使用，例如数组中的对象内容的改变，注意监听数组的变动不需要这么做。注意：deep无法监听到数组的变动和对象的新增，参考vue数组变异,只有以响应式的方式触发才会被监听到。</li>
+</ol>
+<h4 id="单页面和多页面应用"><a href="#单页面和多页面应用" class="headerlink" title="单页面和多页面应用"></a>单页面和多页面应用</h4><h4 id="什么时虚拟DOM"><a href="#什么时虚拟DOM" class="headerlink" title="什么时虚拟DOM"></a>什么时虚拟DOM</h4><blockquote>
+<p>通过js 创建 和原dom 以对象嵌套的方式来表示的<code>dom</code>树, 来替换掉直接对原生 dom的操作，<br>这样 dom 的更改就变成了 js 对象的属性的更改，这样一来就能查找 js 对象的属性变化要比查询 dom 树的性能开销小</p>
+</blockquote>
+<h4 id="v-for-中-key-的作用是什么"><a href="#v-for-中-key-的作用是什么" class="headerlink" title="v-for 中 key 的作用是什么"></a>v-for 中 key 的作用是什么</h4><h4 id="v-show-he-v-if的区别"><a href="#v-show-he-v-if的区别" class="headerlink" title="v-show he v-if的区别"></a>v-show he v-if的区别</h4><blockquote>
+<p>v-show 不显示，但也渲染<br>v-if 显示就渲染，不显示就不渲染， </p>
+</blockquote>
+<h4 id="vue-loader？"><a href="#vue-loader？" class="headerlink" title="vue-loader？"></a>vue-loader？</h4><blockquote>
+<p>作用： 解析和转换.vue文件。提取出其中的逻辑代码 script,样式代码style,以及HTML 模板template，再分别把他们交给对应的loader去处理<br>将es6转换成es5</p>
+</blockquote>
+<h4 id="什么是-mixin"><a href="#什么是-mixin" class="headerlink" title="什么是 mixin"></a>什么是 mixin</h4><h4 id="vue-cli如何配置方向代理"><a href="#vue-cli如何配置方向代理" class="headerlink" title="vue-cli如何配置方向代理"></a>vue-cli如何配置方向代理</h4><h4 id="props-如何指定类型"><a href="#props-如何指定类型" class="headerlink" title="props 如何指定类型"></a>props 如何指定类型</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">props:&#123;<span class="attr">id</span>:[<span class="built_in">Object</span>,<span class="built_in">Number</span>] &#125; </span><br></pre></td></tr></table></figure>
+
+<h4 id="Vue-声明周期中，created-通常用于做什么"><a href="#Vue-声明周期中，created-通常用于做什么" class="headerlink" title="Vue 声明周期中，created 通常用于做什么"></a>Vue 声明周期中，created 通常用于做什么</h4><blockquote>
+<p>获取数据</p>
+</blockquote>
+<h4 id="什么时候执行updated-周期"><a href="#什么时候执行updated-周期" class="headerlink" title="什么时候执行updated 周期"></a>什么时候执行updated 周期</h4><h4 id="Vue的钩子函数为何不能是用箭头函数"><a href="#Vue的钩子函数为何不能是用箭头函数" class="headerlink" title="Vue的钩子函数为何不能是用箭头函数"></a>Vue的钩子函数为何不能是用箭头函数</h4><blockquote>
+<p>this指向未定义</p>
+</blockquote>
+<h4 id="keep-alive什么时候使用？"><a href="#keep-alive什么时候使用？" class="headerlink" title="keep-alive什么时候使用？"></a>keep-alive什么时候使用？</h4><h4 id="路由传值有哪些方式？"><a href="#路由传值有哪些方式？" class="headerlink" title="路由传值有哪些方式？"></a>路由传值有哪些方式？</h4><blockquote>
+<p>工作中常用的的2种方式：</p>
+<ol>
+<li>{name：’’,params:{id;’’}} <code>params</code> 不显示  获取参数 <code>this.$route.params.id</code></li>
+<li>{path:’/path’,query:{id:’’}} <code>query</code> 显示  <code>this.$route.query.id</code></li>
+</ol>
+</blockquote>
+<h4 id="Vuex的使用过程？"><a href="#Vuex的使用过程？" class="headerlink" title="Vuex的使用过程？"></a>Vuex的使用过程？</h4><blockquote>
+<p>state：vuex的基本数据，用来存储变量<br>geeter：从基本数据(state)派生的数据，相当于state的计算属性<br>mutation：提交更新数据的方法，必须是同步的(如果需要异步使用action)<br>action：和mutation的功能大致相同，不同之处在于 ==》1. Action 提交的是 mutation，而不是直接变更状态。 2. Action 可以包含任意异步操作。</p>
+</blockquote>
+<h4 id="什么是异步组件"><a href="#什么是异步组件" class="headerlink" title="什么是异步组件"></a>什么是异步组件</h4><blockquote>
+<p>异步组件就是定义的时候什么都不做，只在组件需要渲染（组件第一次显示）的时候进行加载渲染并缓存，缓存是以备下次访问。</p>
+</blockquote>
+<ul>
+<li>懒加载，按需加载</li>
+</ul>
+<h4 id="Vue-nextTick"><a href="#Vue-nextTick" class="headerlink" title="Vue.nextTick"></a>Vue.nextTick</h4><h2 id="js相关的问题汇总"><a href="#js相关的问题汇总" class="headerlink" title="js相关的问题汇总"></a>js相关的问题汇总</h2><hr>
+<h3 id="new的作用"><a href="#new的作用" class="headerlink" title="new的作用"></a>new的作用</h3><blockquote>
+<ol>
+<li>在内存中创建一个新的空对象</li>
+<li>让this指向这个新的对象</li>
+<li>执行构造函数里面的代码： 目的就是给这个新对象添加属性和方法</li>
+<li>返回这个新对象 (构造函数里面不需要放回)</li>
+</ol>
+</blockquote>
+<h4 id="字符串反转"><a href="#字符串反转" class="headerlink" title="字符串反转"></a>字符串反转</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 方法一， 拆分，数组反转， 数组拼接字符串</span></span><br><span class="line"><span class="keyword">let</span> op =<span class="string">&#x27;abcdefg&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> newOp = op.split(<span class="string">&#x27;&#x27;</span>).reverse().join(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line"><span class="keyword">let</span> newOp2 = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> f <span class="keyword">in</span> op)&#123;newOp2 = f +newOp2 &#125;</span><br><span class="line"><span class="comment">// 方法三</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="proto-和-prototype"><a href="#proto-和-prototype" class="headerlink" title="proto 和 prototype"></a><strong>proto</strong> 和 prototype</h4><blockquote>
+<p><code>__proto__</code> :私有属性，表示只能在内部使用<br> ==&gt; 该属性指向当前对象的构造函数的原型，它保证了对象实例能够访问在构造函数原型中定义的所有属性和方法。</p>
+</blockquote>
+<blockquote>
+<p>prototype: 指向原型对象，这个对象包含所有实例共享的属性和方法<br> ==&gt;我们把prototype属性叫做原型属性。prototype指向的原型对象又有一个属性constructor，这个属性也是一个指针，指回原构造函数</p>
+</blockquote>
+<h4 id="js执行上下文"><a href="#js执行上下文" class="headerlink" title="js执行上下文"></a>js执行上下文</h4><blockquote>
+<p>当函数执行时，会创建一个称为执行上下文的内部对象（可理解为作用域）。一个执行上下文定义了一个函数执行时的环境。</p>
+</blockquote>
+<ol>
+<li>创建阶段 <ol>
+<li>创建作用域链</li>
+<li>创建变量对象</li>
+<li>求 this 的值</li>
+</ol>
+</li>
+<li>激活/代码执行阶段。</li>
+</ol>
+<h4 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h4><blockquote>
+<p>参考<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tylerdonet/p/9595436.html">JavaScript原型链和继承</a></p>
+</blockquote>
+<h4 id="call-bind-apply区别"><a href="#call-bind-apply区别" class="headerlink" title="call bind apply区别"></a>call bind apply区别</h4><blockquote>
+<p>都是改变函数this指向<br>call和apply 参数传递不一样， <code>call</code>是以直接传入<code>(obj,arg1,arg2...)</code>，  <code>apply</code>是以数组的形式传入<code>(obj,[arg1,arg2...])</code><br>call,apply 方法是再调用之后立即执行函数， 而bind方法不立刻执行， 需要将函数再执行一遍</p>
+</blockquote>
+<h4 id="列表去重"><a href="#列表去重" class="headerlink" title="列表去重"></a>列表去重</h4><blockquote>
+<p>es6去重：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">34</span>,<span class="number">54</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">34</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> newArr1 = arr.filter(<span class="function">(<span class="params">x, index,self</span>)=&gt;</span>self.indexOf(x)===index) </span><br><span class="line"><span class="keyword">let</span> newArr2 = <span class="built_in">Array</span>.from( <span class="keyword">new</span> <span class="built_in">Set</span>(arr));</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>es5去重：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> newArr =[]</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;arr.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (newArr.indexOf(arr[i]) !== <span class="number">-1</span>) &#123;newArr.shift(arr[i])&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="宏任务，微任务，事务循环"><a href="#宏任务，微任务，事务循环" class="headerlink" title="宏任务，微任务，事务循环"></a>宏任务，微任务，事务循环</h4><blockquote>
+<p>微任务： promise 创建的任务，<br>宏观任务： 定时器异步的任务，</p>
+</blockquote>
+<h4 id="原生js-实现冒泡排序，-和深拷贝"><a href="#原生js-实现冒泡排序，-和深拷贝" class="headerlink" title="原生js 实现冒泡排序， 和深拷贝"></a>原生js 实现冒泡排序， 和深拷贝</h4><blockquote>
+<p>冒泡算法</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> nums = [<span class="number">12</span>,<span class="number">7</span>,<span class="number">34</span>,<span class="number">65</span>,<span class="number">88</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">12</span>]        </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubble</span>(<span class="params">art</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;art.length<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j=<span class="number">0</span>;j&lt;art.length<span class="number">-1</span>-i;j++)</span><br><span class="line">        <span class="keyword">if</span>(art[j]&gt;art[j+<span class="number">1</span>])&#123;</span><br><span class="line">                <span class="comment">// 当前项大于后一项</span></span><br><span class="line">                <span class="keyword">let</span> temp = [];</span><br><span class="line">                <span class="comment">// art[j],art[j+1] = art[j+1],art[j]</span></span><br><span class="line">                temp = art[j]</span><br><span class="line">                art[j]=art[j+<span class="number">1</span>]</span><br><span class="line">                art[j+<span class="number">1</span>] = temp     </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> art</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="如何判断一个变量是数组还是对象？"><a href="#如何判断一个变量是数组还是对象？" class="headerlink" title="如何判断一个变量是数组还是对象？"></a>如何判断一个变量是数组还是对象？</h4><blockquote>
+<p> 使用 toString()方法// 兼容性比较好</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> b = &#123; <span class="string">&#x27;c&#x27;</span>:<span class="number">2</span>&#125;;</span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(a); <span class="comment">//=&gt;&quot;[object Array]&quot;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(b) <span class="comment">//=&gt; &quot;[object Object]&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用 Array.isArray() 方法</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Array</span>.isArray(a); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Array</span>.isArray(b) <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 不存在Array.isArray() 创建</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray) &#123;</span><br><span class="line">  <span class="built_in">Array</span>.isArray = <span class="function"><span class="keyword">function</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(arg) === <span class="string">&#x27;[object Array]&#x27;</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="ES6中forEach和map方法有何区别？"><a href="#ES6中forEach和map方法有何区别？" class="headerlink" title="ES6中forEach和map方法有何区别？"></a>ES6中forEach和map方法有何区别？</h4><blockquote>
+<p>map()根据当前数组映射出一个新的数组，map和forEach等遍历方法不同，在forEach中return语句是没有任何效果的，而map则可以改变当前循环的值，返回一个新的被改变过值之后的数组（map需return），一般用来处理需要修改某一个数组的值<br>forEach遍历方式遍历数组全部元素，利用回调函数对数组进行操作，自动遍历数组.length次，且无法break中途跳出循环，不可控、不支持return操作输出，return只用于控制循环是否跳出当前循环</p>
+</blockquote>
+<h4 id="什么是闭包"><a href="#什么是闭包" class="headerlink" title="什么是闭包?"></a>什么是闭包?</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.dongzhu.ink/2020/04/15/hou-duan/bi-bao-zhuang-shi-qi/">js中的闭包</a></p>
+</blockquote>
+<h4 id="节流和防抖有何区别-有什么作用"><a href="#节流和防抖有何区别-有什么作用" class="headerlink" title="节流和防抖有何区别? 有什么作用?"></a>节流和防抖有何区别? 有什么作用?</h4><blockquote>
+<p>节流：规定时间内触发一次，==&gt; 稀释函数的执行频率<br>防抖：一个需要频繁触发的函数,在规定时间内,只让最后一次生效,前面不生效,再次触发，从新计算时间<br>作用： 都是为了限制函数的执行频次，以优化函数触发频率过高导致的响应速度跟不上触发频率，出现延迟，假死或卡顿的现象</p>
+</blockquote>
+<h4 id="this是什么，如何改变其指向？"><a href="#this是什么，如何改变其指向？" class="headerlink" title="this是什么，如何改变其指向？"></a>this是什么，如何改变其指向？</h4><blockquote>
+<p>this:  包含他的函数，作为方法被调用时， 所属的对象<br>谁调用函数，执行，this就指向谁， </p>
+</blockquote>
+<h4 id="什么是事件冒泡-如何阻止默认事件"><a href="#什么是事件冒泡-如何阻止默认事件" class="headerlink" title="什么是事件冒泡, 如何阻止默认事件"></a>什么是事件冒泡, 如何阻止默认事件</h4><blockquote>
+<p>事件冒泡: 一个事件的执行从调用它的对象向它的父级对象传播，直到全部执行<br>阻止冒泡： window.event? window.event.cancelBubble = true : e.stopPropagation(); //兼容性考虑<br>阻止默认事件: event.preventDefault()，  return false<br>考虑到兼容行， 再别的浏览器中：<br>IE： window.event.returnValue = false;//阻止事件的默认行为<br>FireFor： event.preventDefault();// 阻止事件的默认行为</p>
+</blockquote>
+<h4 id="mouseenter和mouseover的区别"><a href="#mouseenter和mouseover的区别" class="headerlink" title="mouseenter和mouseover的区别"></a>mouseenter和mouseover的区别</h4><blockquote>
+<p>mouseover: 当鼠标指针位于元素上方时，会发生 mouseover 事件。mouseover最用于目标元素及其后代元素<br>mouseenter: 当鼠标指针穿过元素时，会发生 mouseenter 事件。mouseenter事件只作用于目标元素</p>
+</blockquote>
+<h4 id="什么是事件委托？-有什么作用？"><a href="#什么是事件委托？-有什么作用？" class="headerlink" title="什么是事件委托？ 有什么作用？"></a>什么是事件委托？ 有什么作用？</h4><blockquote>
+<p>利用事件冒泡，只指定一个事件处理程序来管理某一类型的所有事件。<br>减少DOM操作，节省内存空间，提高性能。</p>
+</blockquote>
+<h4 id="Eventloop"><a href="#Eventloop" class="headerlink" title="Eventloop"></a>Eventloop</h4><blockquote>
+<p>JavaScript的一种运行机制<br>Event Loop是一个程序结构，用于等待和发送消息和事件<br><code>简单说，就是在程序中设置两个线程：一个负责程序本身的运行，称为&quot;主线程&quot;； 另一个负责主线程与其他进程（主要是各种I/O操作）的通信，被称为&quot;Event Loop线程&quot;（可以译为&quot;消息线程&quot;）</code></p>
+</blockquote>
+<h4 id="跨域有哪几种，如何解决"><a href="#跨域有哪几种，如何解决" class="headerlink" title="跨域有哪几种，如何解决"></a>跨域有哪几种，如何解决</h4><blockquote>
+<p>当协议、子域名、主域名、端口号中任意一各不相同时，都算不同的“域”。 请求就出现了跨域， 工作中常遇到的的：</p>
+</blockquote>
+<ul>
+<li>CORS跨域 ： 各种请求， 只需要后端配置</li>
+<li>JSONP ： 只持此get请求</li>
+</ul>
+<h4 id="手写原生ajax"><a href="#手写原生ajax" class="headerlink" title="手写原生ajax"></a>手写原生ajax</h4><h4 id="window-onload-和-docunment-read-的区别"><a href="#window-onload-和-docunment-read-的区别" class="headerlink" title="window.onload 和 $(docunment.read)的区别"></a>window.onload 和 $(docunment.read)的区别</h4><blockquote>
+<p>执行时机：</p>
+</blockquote>
+<ol>
+<li>window.onload ：必须在页面所有元素（包括图片，引用文件）加载完后执行。。</li>
+<li>$(document).ready() ：是页面中所有HTML DOM，CSS DOM结构加载完之后就会执行，其他图片可能没有加载完。<blockquote>
+<p>编写个数不同</p>
+</blockquote>
+</li>
+<li>window.onload ：不能同时写多个，后面的将会覆盖前面的</li>
+<li>$(document).ready() ：可以同时编写多个，并且都可以得到执行。<blockquote>
+<p>简写</p>
+</blockquote>
+</li>
+<li>window.onload ：无。</li>
+<li>$(document).ready() ：=》 <code>$().ready(function()&#123;&#125;)</code> =&gt; <code>$(function()&#123;&#125;)</code></li>
+</ol>
+<h4 id="原生js-获取和jQuery获取元素"><a href="#原生js-获取和jQuery获取元素" class="headerlink" title="原生js 获取和jQuery获取元素"></a>原生js 获取和jQuery获取元素</h4><blockquote>
+<p>原生js</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;box&#x27;</span> <span class="attr">class</span>=<span class="string">&quot;cp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementById(<span class="string">&#x27;box&#x27;</span>)</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementsByTagName(<span class="string">&#x27;div&#x27;</span>)</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementsByClassName(<span class="string">&#x27;cp&#x27;</span>)</span></span><br><span class="line"><span class="javascript"><span class="comment">// 选择器</span></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.querySelector(<span class="string">&#x27;#box&#x27;</span>)||<span class="built_in">document</span>.querySelectorAll(<span class="string">&#x27;.cp&#x27;</span>);</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementsByName(<span class="string">&#x27;x&#x27;</span>); <span class="comment">// 返回name属性为x的伪数组</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>jQuery中获取元素</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基础选择器</span></span><br><span class="line">$(<span class="string">&#x27;#id&#x27;</span>)</span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">$(<span class="string">&#x27;.class&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 交集，并列选择器</span></span><br><span class="line">$(<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,)</span><br><span class="line">$(ul.li)</span><br><span class="line"><span class="comment">// 层次选择器</span></span><br><span class="line">$(<span class="string">&#x27;li span&#x27;</span>); <span class="comment">//后代选择器，li后代中所有的span</span></span><br><span class="line">$(<span class="string">&#x27;li&gt;span&#x27;</span>); <span class="comment">//子代选择器，li子代中所有的span</span></span><br><span class="line">$(<span class="string">&#x27;#dv~span&#x27;</span>);<span class="comment">//#dv后方兄弟span标签</span></span><br><span class="line">$(<span class="string">&#x27;#dv+span&#x27;</span>);<span class="comment">//#dv后方直接跟着的兄弟span标签</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 索引选</span></span><br><span class="line">$(对象:eq(索引值)); <span class="comment">//选中该索引值对应的对象</span></span><br><span class="line">$(对象:lt(索引值)) <span class="comment">//选中小于该索引值所有的对象</span></span><br><span class="line">$(对象:gt(索引值))<span class="comment">//选中大于该索引值所有的对象</span></span><br><span class="line">$(对象:odd/even) <span class="comment">//选中索引值为奇数/偶数的对象</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="DOM的增删改"><a href="#DOM的增删改" class="headerlink" title="DOM的增删改"></a>DOM的增删改</h4><blockquote>
+<p><a href="/_posts/%E5%89%8D%E7%AB%AF/DOM%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.md">Dom的操作</a></p>
+</blockquote>
+<ol>
+<li><code>appendChild</code>(追加为子元素)</li>
+<li><code>insertBefore</code>(插入前面)</li>
+<li><code>removeChild</code>(删除子元素)</li>
+<li><code>replaceChild</code>(替换子元素)</li>
+<li>选择器, id,tag,</li>
+</ol>
+<h4 id="break-continue-和for-循环的区别"><a href="#break-continue-和for-循环的区别" class="headerlink" title="break continue 和for 循环的区别"></a>break continue 和for 循环的区别</h4><blockquote>
+<p>break:终止循环<br>continue:跳过这条循环<br>for 循环</p>
+</blockquote>
+<h4 id="null-和-undefined的区别-typeof-null的值？"><a href="#null-和-undefined的区别-typeof-null的值？" class="headerlink" title="null 和 undefined的区别 , typeof null的值？"></a>null 和 undefined的区别 , typeof null的值？</h4><blockquote>
+<p>null: object类型，代表“空值”，代表一个空对象指针，</p>
+</blockquote>
+<ul>
+<li>作为函数的参数，表示该函数的参数不是对象。</li>
+<li>作为对象原型链的终点。</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>undefined:  声明未给值，undefined类型</p>
+</blockquote>
+</blockquote>
+<ol>
+<li>变量被声明了，但没有赋值时，就等于undefined。 例如，</li>
+<li>调用函数时，应该提供的参数没有提供，该参数等于undefined。</li>
+<li>对象没有赋值的属性，该属性的值为undefined。</li>
+<li>函数没有返回值时或者return后面什么也没有，返回undefined。</li>
+</ol>
+<blockquote>
+<p>typeof null: “object”</p>
+</blockquote>
+<ul>
+<li><code>console.log(null==undefined)//true</code></li>
+<li><code>console.log(null===undefined)//false</code></li>
+</ul>
+<h4 id="GET和POST-的区别"><a href="#GET和POST-的区别" class="headerlink" title="GET和POST 的区别"></a>GET和POST 的区别</h4><blockquote>
+</blockquote>
+<ol>
+<li>get参数通过url传递，post放在request body中</li>
+<li>get请求在url中传递的参数是有长度限制的，而post没有。</li>
+<li>get比post更不安全，因为参数直接暴露在url中，所以不能用来传递敏感信息。<ul>
+<li>get请求只能进行url编码，而post支持多种编码方式</li>
+<li>get请求会浏览器主动cache，而post支持多种编码方式。</li>
+<li>get请求参数会被完整保留在浏览历史记录里，而post中的参数不会被保留。</li>
+</ul>
+</li>
+</ol>
+<h4 id="手写实现原型链继承"><a href="#手写实现原型链继承" class="headerlink" title="手写实现原型链继承"></a>手写实现原型链继承</h4><h4 id="ES6-新特性（变量，数组方法，箭头函数）"><a href="#ES6-新特性（变量，数组方法，箭头函数）" class="headerlink" title="ES6 新特性（变量，数组方法，箭头函数）"></a>ES6 新特性（变量，数组方法，箭头函数）</h4><h2 id="css-项目的问题汇总"><a href="#css-项目的问题汇总" class="headerlink" title="css 项目的问题汇总"></a>css 项目的问题汇总</h2><hr>
+<h4 id="标准盒子模型和怪异盒模型"><a href="#标准盒子模型和怪异盒模型" class="headerlink" title="标准盒子模型和怪异盒模型"></a>标准盒子模型和怪异盒模型</h4><blockquote>
+<p>在标准模式下，一个块的总宽度= width + margin(左右) + padding(左右) + border(左右)<br>一个块的总宽度= width + margin(左右)（即width已经包含了padding和border值）</p>
+</blockquote>
+<h4 id="什么是盒子模型"><a href="#什么是盒子模型" class="headerlink" title="什么是盒子模型"></a>什么是盒子模型</h4><h4 id="水平垂直居中的方式"><a href="#水平垂直居中的方式" class="headerlink" title="水平垂直居中的方式"></a>水平垂直居中的方式</h4><h4 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h4><blockquote>
+<p>伸缩盒布局 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html">阮一峰-flex布局</a><br><strong>容器（父元素设置）上的属性</strong></p>
+</blockquote>
+<ul>
+<li><code>flex-direction</code>  属性决定主轴的方向（即项目的排列方向）<ul>
+<li><code>row</code>（默认值）：主轴为水平方向，起点在左端。</li>
+<li><code>row-reverse</code>：主轴为水平方向，起点在右端。</li>
+<li><code>column</code>：主轴为垂直方向，起点在上沿。</li>
+<li><code>column-reverse</code>：主轴为垂直方向，起点在下沿。</li>
+</ul>
+</li>
+<li><code>flex-wrap</code>  ：默认情况下，项目都排在一条线（又称”轴线”）上<ul>
+<li><code>nowrap</code>（默认）：不换行。</li>
+<li><code>wrap</code>：换行，第一行在上方。</li>
+<li><code>wrap-reverse</code>：换行，第一行在下方。</li>
+</ul>
+</li>
+<li><code>flex-flow</code>  : 属性是flex-direction属性和flex-wrap属性的简写形式: 默认值为 <code>row</code> <code>nowrap</code><ul>
+<li><code>flex-flow</code>: <flex-direction> || <flex-wrap></li>
+</ul>
+</li>
+<li><code>justify-content</code> :  布局方式 属性定义了项目在主轴上的对齐方式<ul>
+<li><code>flex-start</code>（默认值）：左对齐</li>
+<li><code>flex-end</code>：右对齐</li>
+<li><code>center</code>： 居中</li>
+<li><code>space-between</code>：两端对齐，项目之间的间隔都相等</li>
+<li><code>space-around</code>：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</li>
+</ul>
+</li>
+<li><code>align-items</code> 属性定义项目在交叉轴上如何对齐<ul>
+<li><code>flex-start</code>：交叉轴的起点对齐。</li>
+<li><code>flex-end</code>：交叉轴的终点对齐。</li>
+<li><code>center</code>：交叉轴的中点对齐。</li>
+<li><code>baseline</code>: 项目的第一行文字的基线对齐</li>
+<li><code>stretch</code>（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</li>
+</ul>
+</li>
+<li><code>align-content</code>  : 属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。<ul>
+<li><code>flex-start</code>：与交叉轴的起点对齐。</li>
+<li><code>flex-end</code>：与交叉轴的终点对齐。</li>
+<li><code>center</code>：与交叉轴的中点对齐。</li>
+<li><code>space-between</code>：与交叉轴两端对齐，轴线之间的间隔平均分布。</li>
+<li><code>space-around</code>：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。</li>
+<li><code>stretch</code>（默认值）：轴线占满整个交叉轴。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>项目的（子元素）属性</strong></p>
+</blockquote>
+<ul>
+<li><code>order</code> : <integer>;  属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。</li>
+<li><code>flex-grow</code> : <number>; /* default 0 */  属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</li>
+<li><code>flex-shrink</code> : <number>  属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。=&gt;负值对该属性无效。</li>
+<li><code>flex-basis</code> : <length> | auto; /* default auto */  属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小</li>
+<li><code>flex</code> : none | [ &lt;’flex-grow’&gt; &lt;’flex-shrink’&gt;? || &lt;’flex-basis’&gt; ]   属性是<code>flex-grow</code>, <code>flex-shrink </code>和 <code>flex-basis</code>的简写，默认值为0 1 auto。后两个属性可选。</li>
+<li><code>align-self</code> : 属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。<ul>
+<li><code>align-self</code>: <code>auto</code> | <code>flex-start</code> | <code>flex-end</code> | <code>center</code> | <code>baseline</code> | <code>stretch</code>;  该属性可能取6个值，除了<code>auto</code>，其他都与<code>align-items</code>属性完全一致。</li>
+</ul>
+</li>
+</ul>
+<h4 id="css五种定位"><a href="#css五种定位" class="headerlink" title="css五种定位"></a>css五种定位</h4><blockquote>
+<ol>
+<li><code>static</code> 定位(普通流定位) ————– 默认定位</li>
+<li><code>relative</code> 定位(相对定位) <code>position:relative</code>; 该元素不脱离文档流，依然占浏览器位置。 常用来作为绝对定位元素的容器。可通过left、top、right、bottom值进行偏移，不设偏移量时位置不变。<br>可以通过z-index改变层叠顺序</li>
+<li><code>absolute</code> 定位(绝对定位) <code>position:absolute</code>; 脱离文档流，不再占据空间，因此，下面的元素会顶上来。</li>
+<li><code>fixed</code>；固定定位 <code>position:fixed</code> 脱离文档流，和绝对定位不同，固定定位会使该元素固定在某个位置不动。</li>
+<li><code>sticky</code> (粘性定位) <code>position:sticky</code>; CSS3新增的定位属性，用于页面滚动时的定位，一般用于吸顶效果,  粘性定位的父元素不能设置overflow:hidden和overflow:auto;否则不能实现吸顶效果。</li>
+</ol>
+</blockquote>
+<h4 id="css变量"><a href="#css变量" class="headerlink" title="css变量"></a>css变量</h4><blockquote>
+<p>用 <code>--</code> 声明, <code>var()</code> 函数用于读取变量   <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2017/05/css-variables.html">阮一峰-css变量</a></p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">--foo</span>: <span class="number">#7F583F</span>;</span><br><span class="line">  <span class="attribute">--bar</span>: <span class="number">#F7EFD2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*var() 函数用于读取变量。*/</span></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="built_in">var</span>(--foo);</span><br><span class="line">  <span class="attribute">text-decoration-color</span>: <span class="built_in">var</span>(--bar);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 函数还可以使用第二个参数，表示变量的默认值。如果该变量不存在，就会使用这个默认值。*/</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">color</span>: <span class="selector-tag">var</span>(<span class="selector-tag">--foo</span>, <span class="selector-id">#7F583F</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="伪元素和伪类"><a href="#伪元素和伪类" class="headerlink" title="伪元素和伪类"></a>伪元素和伪类</h4><ol>
+<li><code>before</code> 和 <code>after</code>是经常经常重用的伪元素</li>
+<li>hover 和active 属于UI伪类<br>区别：<br>伪类和选择器之间用一个冒号隔开，伪元素则是两个冒号隔.</li>
+</ol>
+<h4 id="css如何实现左侧固定，右侧自动适应布局"><a href="#css如何实现左侧固定，右侧自动适应布局" class="headerlink" title="css如何实现左侧固定，右侧自动适应布局"></a>css如何实现左侧固定，右侧自动适应布局</h4><blockquote>
+<p>定位， 左右2变固定定位， 中间 auto自动适应<br>flex布局， 左右给定固定的宽度， 中间 flex：1</p>
+</blockquote>
+<h4 id="gt-在css3-中表示什么"><a href="#gt-在css3-中表示什么" class="headerlink" title="~ + &gt; 在css3 中表示什么"></a>~ + &gt; 在css3 中表示什么</h4><h4 id="什么是浮动-如何清除浮动？"><a href="#什么是浮动-如何清除浮动？" class="headerlink" title="什么是浮动  如何清除浮动？"></a>什么是浮动  如何清除浮动？</h4><h4 id="import-和-link-的区别"><a href="#import-和-link-的区别" class="headerlink" title="@import 和 link 的区别"></a>@import 和 link 的区别</h4><blockquote>
+<ol>
+<li>加载顺序不通， link是异步， @import 是页面加载完成后被加载</li>
+<li>DOM操作</li>
+<li>link引入的权重， 大于@improt ==》 引入的在最上面</li>
+<li>从属关系， link 是html 标签，  @import是css关键字</li>
+</ol>
+</blockquote>
+<h4 id="BFC-FFC-IFC"><a href="#BFC-FFC-IFC" class="headerlink" title="BFC FFC IFC"></a>BFC FFC IFC</h4><ol>
+<li>BFC 块级格式化上下文</li>
+<li></li>
+</ol>
+<h4 id="vw-和-rem-怎么用"><a href="#vw-和-rem-怎么用" class="headerlink" title="vw 和 rem 怎么用"></a>vw 和 rem 怎么用</h4><blockquote>
+<p> vw 是视口单位，相当于把视口等分成了100，1vw = 1<br> rem是相对单位，设置根元素 html 的 font-size，比如给 html 设置字体大小为100px，1rem = 100px;</p>
+<blockquote>
+<p>举例：<br>我们以 iPhone6为基准，屏幕宽度为375px，然后换算成 vw<br>    <code>　375 / 100 = 3.75;</code><br>一般使用 rem 会给 html 的 font-size 设置大小为 100px，因为方便计算，这里需要把100px 换算为 vw<br>    <code>　100 / 3.75 = 26.6666666vw</code></p>
+<blockquote>
+<p>注：上面结果能最大限度减少像素偏差，经测试，若值舍五入为27vw或26vw都会有1-2像素的偏差</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="前端性能，多端适配，-综合题型"><a href="#前端性能，多端适配，-综合题型" class="headerlink" title="前端性能，多端适配， 综合题型"></a>前端性能，多端适配， 综合题型</h2><hr>
+<h4 id="性能优化，"><a href="#性能优化，" class="headerlink" title="性能优化，"></a>性能优化，</h4><h4 id="简单说一下从输入网站到页面显示发生了什么？"><a href="#简单说一下从输入网站到页面显示发生了什么？" class="headerlink" title="简单说一下从输入网站到页面显示发生了什么？"></a>简单说一下从输入网站到页面显示发生了什么？</h4><h4 id="你从哪些方便考虑，来做性能优化？"><a href="#你从哪些方便考虑，来做性能优化？" class="headerlink" title="你从哪些方便考虑，来做性能优化？"></a>你从哪些方便考虑，来做性能优化？</h4><h4 id="如何快速显示一个页面？"><a href="#如何快速显示一个页面？" class="headerlink" title="如何快速显示一个页面？"></a>如何快速显示一个页面？</h4><h4 id="网站打开速度优化的几种方式"><a href="#网站打开速度优化的几种方式" class="headerlink" title="网站打开速度优化的几种方式"></a>网站打开速度优化的几种方式</h4><ol>
+<li>借助外部力量优化，CDN加速、云存储等。</li>
+<li>网站图片压缩优化，</li>
+<li>对于网站代码优化这方面，</li>
+<li>服务器端，在服务器端要记得开启GZIP压缩功能,客户端浏览器快速解压的原理</li>
+<li>使用浏览器缓存</li>
+<li>减少重定向请求</li>
+</ol>
+
+          
+            <div class='article_footer'>
+              
+                
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+<section class="widget copyright  desktop mobile">
+  <div class='content'>
+    
+      <blockquote>
+        
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+          
+        
+          
+            <p>本文永久链接是：<a href=https://dongzhu.ink/archives/a5104644.html>https://dongzhu.ink/archives/a5104644.html</a></p>
+          
+        
+      </blockquote>
+    
+  </div>
+</section>
+
+  
+
+  
+    
+    
+
+<section class="widget qrcode  desktop mobile">
+  
+
+  <div class='content article-entry'>
+    
+      
+        <div class='fancybox'><img src='/img/alipay.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+      
+        <div class='fancybox'><img src='/img/wechat.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+  </div>
+</section>
+
+  
+
+
+              
+            </div>
+          
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-08-08T09:40:54+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2020年8月8日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/css/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>css</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/javascript/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>javaScript</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/vue/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>vue</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/react/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>React</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/html/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>html</p></a></div>
+
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://dongzhu.ink/archives/a5104644.html&title=前端常考的问题 - 逸枫&summary=vue相关的问题汇总
+vue组件通信有哪些？
+vue组件通信有好几种方法，具体介绍工作中常用的方法父子组件直接的通信，props $emit/$on父组件向子组件通信， 只需要 父组件中绑定响应方法， 子组件通过 props 直接接收使用即可，子组件向父组件通信，    - 子组件上面绑定一个事件方法， 方法中通过 this.$emit(&#39;自定义事件名&#39;，&#39;传递的参数&#39;)    - 父组件中需要接收 v-on:自定义事件名= 来获取数据子组件向父组件通信，$emit/$on 订阅者发布则模式， 实现 兄弟之间通信
+
+var Event=new Vue(); // 创建一个消息队列Event.$emit(事件名,数据); // 子组件发送事件Event.$on(事件名,data =&gt; &#123;&#125;); // 父组件接收"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://dongzhu.ink/archives/a5104644.html&title=前端常考的问题 - 逸枫&summary=vue相关的问题汇总
+vue组件通信有哪些？
+vue组件通信有好几种方法，具体介绍工作中常用的方法父子组件直接的通信，props $emit/$on父组件向子组件通信， 只需要 父组件中绑定响应方法， 子组件通过 props 直接接收使用即可，子组件向父组件通信，    - 子组件上面绑定一个事件方法， 方法中通过 this.$emit(&#39;自定义事件名&#39;，&#39;传递的参数&#39;)    - 父组件中需要接收 v-on:自定义事件名= 来获取数据子组件向父组件通信，$emit/$on 订阅者发布则模式， 实现 兄弟之间通信
+
+var Event=new Vue(); // 创建一个消息队列Event.$emit(事件名,数据); // 子组件发送事件Event.$on(事件名,data =&gt; &#123;&#125;); // 父组件接收"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://dongzhu.ink/archives/a5104644.html&title=前端常考的问题 - 逸枫&summary=vue相关的问题汇总
+vue组件通信有哪些？
+vue组件通信有好几种方法，具体介绍工作中常用的方法父子组件直接的通信，props $emit/$on父组件向子组件通信， 只需要 父组件中绑定响应方法， 子组件通过 props 直接接收使用即可，子组件向父组件通信，    - 子组件上面绑定一个事件方法， 方法中通过 this.$emit(&#39;自定义事件名&#39;，&#39;传递的参数&#39;)    - 父组件中需要接收 v-on:自定义事件名= 来获取数据子组件向父组件通信，$emit/$on 订阅者发布则模式， 实现 兄弟之间通信
+
+var Event=new Vue(); // 创建一个消息队列Event.$emit(事件名,数据); // 子组件发送事件Event.$on(事件名,data =&gt; &#123;&#125;); // 父组件接收"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png">
+          
+        </a>
+      
+    
+      
+        
+        <div class='hoverbox'>
+          <a class='share'><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/wechat.png"></a>
+          <div class='target'>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPgAAAD4CAAAAADkunTXAAACQklEQVR42u3aSXLDMAwEQP//08k9qRSxSVFBzZttLWycxgQ+Xy9dH3BwcHBw8EXwT3H9vP+vz79eHPz99L7yfsHBwcHBwRfCwwHgsJHxwJEs7PF+cHBwcHDwxfBsYIkGlOiGs89PByxwcHBwcHDw9P3Z93TfBw4ODg4ODh4PMKfvo9Dse8DBwcHBwcHrB/RTGz8V7HGdFHBwcHBw8AfBrxrwu+rz4ycbwcHBwcHBb4B3V7Uw1YZCe7/g4ODg4OCL4KeNZYHZQNIdFEg7wMHBwcHBF8GvOjA4baA6QNAdMAAHBwcHB98En2ogTA/uhSHB4AIODg4ODv4m+HRDYQrWLhQ4ODg4OPiL4NlGfvWgIQqOPj88GAAODg4ODr4YfluwGCrI8X5wcHBwcPDF8Or31YCRDTbVAoKDg4ODg2+GV//gdwuRLVB238eDCHBwcHBw8MXwdmAoHnBUGx3g4ODg4OBvgmcP5KcOKrrXZQsBDg4ODg6+EZ5t8E+DswGqO5gADg4ODg6+CZ49GMhCsgN/6YOFbKMBHBwcHBx8IfyqAb8soDoAGA5Q4ODg4ODgC+HVNdU4mHr+MQiBg4ODg4MvgncDwnTAiQaa7HXg4ODg4OCb4dVAkT1AmDq4KBcaHBwcHBx8Mbzb6O8O+lUbCuH9g4ODg4ODg5cDTLUw0cIdAxE4ODg4ODh4+/pqoIk+BxwcHBwc/I3w6UZ+dXAvDPmvwQBwcHBwcPAHwbPrroZE9n5wcHBwcPA3wd+2wMHBwcHBF6xv0pLAm2SS4AoAAAAASUVORK5CYII=">
+          </div>
+        </div>
+      
+    
+      
+        <a class="-mob-share-telegram" title="" rel="external nofollow noopener noreferrer noopener"
+          
+            target="_blank" href="https://t.me/share/url?url=https://dongzhu.ink/archives/a5104644.html&text=前端常考的问题 - 逸枫"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/telegram.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+          <div class="prev-next">
+            
+              <a class='prev' href='/archives/c36507d3.html'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>webpack常用配置</p>
+                <p class='content'>webpack创建项目
+项目初始化 npm init （再输入项目）  || npm init -y
+下载包 npm i webpack webpack-cli -D 开发依赖
+
+
+配置 web...</p>
+              </a>
+            
+            
+              <a class='next' href='/archives/b96b1f.html'>
+                <p class='title'>Coding加域名部署<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>注册Coding账号密码
+Coding注册
+
+注册完成后，登入创建 DevOpos 类型项目，
+
+项目名称,项目表示，自己随定义取名， 跟Github一样
+
+创建项目后，点击项目，找到代码创库，...</p>
+              </a>
+            
+          </div>
+        
+      </section>
+    </article>
+  
+
+  
+    
+
+  <article class="post white-box reveal comments shadow">
+    <section class="article typo">
+      <p ct><i class='fas fa-comments'></i> 评论</p>
+      
+      <section id="comments">
+        <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+      </section>
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vue%E7%9B%B8%E5%85%B3%E7%9A%84%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB"><span class="toc-text">vue相关的问题汇总</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#vue%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-text">vue组件通信有哪些？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vuex%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-text">Vuex数据持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vue%E7%9A%84%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F%EF%BC%8C%E5%90%84%E4%B8%AA%E9%98%B6%E6%AE%B5%E9%83%BD%E5%B9%B2%E5%95%A5%E7%9A%84"><span class="toc-text">Vue的声明周期，各个阶段都干啥的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vue%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86"><span class="toc-text">vue响应式原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-on%E5%8F%AF%E4%BB%A5%E7%BB%91%E5%AE%9A%E5%A4%9A%E4%B8%AA%E5%87%BD%E6%95%B0%E5%90%97%EF%BC%9F"><span class="toc-text">v-on可以绑定多个函数吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-text">路由钩子函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sessionStorage-localStorage-cookie-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">sessionStorage localStorage cookie 的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#computed%E5%92%8Cwatch%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">computed和watch的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%92%8C%E5%A4%9A%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8"><span class="toc-text">单页面和多页面应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E8%99%9A%E6%8B%9FDOM"><span class="toc-text">什么时虚拟DOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-for-%E4%B8%AD-key-%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">v-for 中 key 的作用是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-show-he-v-if%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">v-show he v-if的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vue-loader%EF%BC%9F"><span class="toc-text">vue-loader？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-mixin"><span class="toc-text">什么是 mixin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vue-cli%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-text">vue-cli如何配置方向代理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#props-%E5%A6%82%E4%BD%95%E6%8C%87%E5%AE%9A%E7%B1%BB%E5%9E%8B"><span class="toc-text">props 如何指定类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vue-%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F%E4%B8%AD%EF%BC%8Ccreated-%E9%80%9A%E5%B8%B8%E7%94%A8%E4%BA%8E%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-text">Vue 声明周期中，created 通常用于做什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E6%89%A7%E8%A1%8Cupdated-%E5%91%A8%E6%9C%9F"><span class="toc-text">什么时候执行updated 周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vue%E7%9A%84%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%E4%B8%BA%E4%BD%95%E4%B8%8D%E8%83%BD%E6%98%AF%E7%94%A8%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="toc-text">Vue的钩子函数为何不能是用箭头函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#keep-alive%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="toc-text">keep-alive什么时候使用？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E4%BC%A0%E5%80%BC%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-text">路由传值有哪些方式？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vuex%E7%9A%84%E4%BD%BF%E7%94%A8%E8%BF%87%E7%A8%8B%EF%BC%9F"><span class="toc-text">Vuex的使用过程？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6"><span class="toc-text">什么是异步组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vue-nextTick"><span class="toc-text">Vue.nextTick</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js%E7%9B%B8%E5%85%B3%E7%9A%84%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB"><span class="toc-text">js相关的问题汇总</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#new%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">new的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8D%E8%BD%AC"><span class="toc-text">字符串反转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#proto-%E5%92%8C-prototype"><span class="toc-text">proto 和 prototype</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#js%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-text">js执行上下文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF"><span class="toc-text">原型链继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#call-bind-apply%E5%8C%BA%E5%88%AB"><span class="toc-text">call bind apply区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E5%8E%BB%E9%87%8D"><span class="toc-text">列表去重</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%8F%E4%BB%BB%E5%8A%A1%EF%BC%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1%EF%BC%8C%E4%BA%8B%E5%8A%A1%E5%BE%AA%E7%8E%AF"><span class="toc-text">宏任务，微任务，事务循环</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%94%9Fjs-%E5%AE%9E%E7%8E%B0%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%EF%BC%8C-%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="toc-text">原生js 实现冒泡排序， 和深拷贝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%8F%98%E9%87%8F%E6%98%AF%E6%95%B0%E7%BB%84%E8%BF%98%E6%98%AF%E5%AF%B9%E8%B1%A1%EF%BC%9F"><span class="toc-text">如何判断一个变量是数组还是对象？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES6%E4%B8%ADforEach%E5%92%8Cmap%E6%96%B9%E6%B3%95%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">ES6中forEach和map方法有何区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85"><span class="toc-text">什么是闭包?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB-%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8"><span class="toc-text">节流和防抖有何区别? 有什么作用?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#this%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E5%A6%82%E4%BD%95%E6%94%B9%E5%8F%98%E5%85%B6%E6%8C%87%E5%90%91%EF%BC%9F"><span class="toc-text">this是什么，如何改变其指向？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1-%E5%A6%82%E4%BD%95%E9%98%BB%E6%AD%A2%E9%BB%98%E8%AE%A4%E4%BA%8B%E4%BB%B6"><span class="toc-text">什么是事件冒泡, 如何阻止默认事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mouseenter%E5%92%8Cmouseover%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">mouseenter和mouseover的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98%EF%BC%9F-%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="toc-text">什么是事件委托？ 有什么作用？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Eventloop"><span class="toc-text">Eventloop</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%A8%E5%9F%9F%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%EF%BC%8C%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="toc-text">跨域有哪几种，如何解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%86%99%E5%8E%9F%E7%94%9Fajax"><span class="toc-text">手写原生ajax</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#window-onload-%E5%92%8C-docunment-read-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">window.onload 和 $(docunment.read)的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%94%9Fjs-%E8%8E%B7%E5%8F%96%E5%92%8CjQuery%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0"><span class="toc-text">原生js 获取和jQuery获取元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DOM%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9"><span class="toc-text">DOM的增删改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#break-continue-%E5%92%8Cfor-%E5%BE%AA%E7%8E%AF%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">break continue 和for 循环的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null-%E5%92%8C-undefined%E7%9A%84%E5%8C%BA%E5%88%AB-typeof-null%E7%9A%84%E5%80%BC%EF%BC%9F"><span class="toc-text">null 和 undefined的区别 , typeof null的值？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GET%E5%92%8CPOST-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">GET和POST 的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF"><span class="toc-text">手写实现原型链继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES6-%E6%96%B0%E7%89%B9%E6%80%A7%EF%BC%88%E5%8F%98%E9%87%8F%EF%BC%8C%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%EF%BC%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%EF%BC%89"><span class="toc-text">ES6 新特性（变量，数组方法，箭头函数）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css-%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB"><span class="toc-text">css 项目的问题汇总</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E5%92%8C%E6%80%AA%E5%BC%82%E7%9B%92%E6%A8%A1%E5%9E%8B"><span class="toc-text">标准盒子模型和怪异盒模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">什么是盒子模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-text">水平垂直居中的方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#flex%E5%B8%83%E5%B1%80"><span class="toc-text">flex布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#css%E4%BA%94%E7%A7%8D%E5%AE%9A%E4%BD%8D"><span class="toc-text">css五种定位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#css%E5%8F%98%E9%87%8F"><span class="toc-text">css变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%AA%E5%85%83%E7%B4%A0%E5%92%8C%E4%BC%AA%E7%B1%BB"><span class="toc-text">伪元素和伪类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#css%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%B7%A6%E4%BE%A7%E5%9B%BA%E5%AE%9A%EF%BC%8C%E5%8F%B3%E4%BE%A7%E8%87%AA%E5%8A%A8%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80"><span class="toc-text">css如何实现左侧固定，右侧自动适应布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gt-%E5%9C%A8css3-%E4%B8%AD%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88"><span class="toc-text">~ + &gt; 在css3 中表示什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B5%AE%E5%8A%A8-%E5%A6%82%E4%BD%95%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%EF%BC%9F"><span class="toc-text">什么是浮动  如何清除浮动？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#import-%E5%92%8C-link-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">@import 和 link 的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BFC-FFC-IFC"><span class="toc-text">BFC FFC IFC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vw-%E5%92%8C-rem-%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-text">vw 和 rem 怎么用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%EF%BC%8C%E5%A4%9A%E7%AB%AF%E9%80%82%E9%85%8D%EF%BC%8C-%E7%BB%BC%E5%90%88%E9%A2%98%E5%9E%8B"><span class="toc-text">前端性能，多端适配， 综合题型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C"><span class="toc-text">性能优化，</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B4%E4%B8%80%E4%B8%8B%E4%BB%8E%E8%BE%93%E5%85%A5%E7%BD%91%E7%AB%99%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">简单说一下从输入网站到页面显示发生了什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%A0%E4%BB%8E%E5%93%AA%E4%BA%9B%E6%96%B9%E4%BE%BF%E8%80%83%E8%99%91%EF%BC%8C%E6%9D%A5%E5%81%9A%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%9F"><span class="toc-text">你从哪些方便考虑，来做性能优化？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E6%98%BE%E7%A4%BA%E4%B8%80%E4%B8%AA%E9%A1%B5%E9%9D%A2%EF%BC%9F"><span class="toc-text">如何快速显示一个页面？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E6%89%93%E5%BC%80%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">网站打开速度优化的几种方式</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+  
+
+  
+    
+    
+
+<section class="widget text shadow desktop">
+  
+  <header>
+    
+      <a target="_blank" rel="noopener" href='https://github.com/YouAge'><i class="fab fa-github fa-fw" aria-hidden="true"></i><span class='name'>点个赞吧</span></a>
+    
+  </header>
+
+
+  <div class='content'>
+    
+      <p>您的赞对我来说很重要，如果您喜欢本主题，希望能够给下面的项目点个赞来支持一下。</p>
+
+    
+  </div>
+</section>
+
+  
+
+  
+    
+    
+
+<section class="widget qrcode shadow desktop mobile">
+  
+
+  <div class='content article-entry'>
+    
+      
+        <div class='fancybox'><img src='/img/alipay.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+      
+        <div class='fancybox'><img src='/img/wechat.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+  </div>
+</section>
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget related_posts shadow desktop mobile">
+    
+  <header>
+    
+      <i class="fas fa-bookmark fa-fw" aria-hidden="true"></i><span class='name'>相关文章</span>
+    
+  </header>
+
+
+    <div class="content">
+      <ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="\archives\35f01edd.html" title="有趣的题（1）" rel="bookmark">有趣的题（1）</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="\archives\e2e1e8ad.html" title="vue双向数据绑定原理" rel="bookmark">vue双向数据绑定原理</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="\archives\f4ae9910.html" title="css权重和属性继承" rel="bookmark">css权重和属性继承</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="\archives\c229250e.html" title="DOM的增删改查" rel="bookmark">DOM的增删改查</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="\archives\926d3aa6.html" title="React(学习一)" rel="bookmark">React(学习一)</a></h3></div></li></ul>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+    </div>
+    
+  
+  <footer class="clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='533953408'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/search.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="mailto:1010227175@qq.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="https://github.com/YouAge"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/playlist?id=533953408"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        本站使用
+        <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a>
+        作为主题，总访问量为
+          <span id="busuanzi_value_site_pv"><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+          次
+        
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2018-2020 master Teams</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <div>
+    
+      
+  
+
+  <div id="rightmenu-wrapper">
+    <ul class="list-v rightmenu" id="rightmenu-content">
+      <li class='option'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-text' onclick='document.execCommand("copy")'><i class='fa fa-copy fa-fw'></i>复制文本</a>
+        <hr id='hr-text'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-href'><i class='fa fa-link fa-fw'></i>复制链接</a>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-open-href'><i class='fa fa-external-link-square-alt fa-fw'></i>在新标签页打开</a>
+        <hr id='hr-href'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-src'><i class='fa fa-image fa-fw'></i>复制图片地址</a>
+        <hr id='hr-src'>
+      </li>
+      <li class='navigation'>
+        <a class='nav icon-only fix-cursor-default' onclick='history.back()'><i class='fa fa-arrow-left fa-fw'></i></a>
+        <a class='nav icon-only fix-cursor-default' onclick='history.forward()'><i class='fa fa-arrow-right fa-fw'></i></a>
+        <a class='nav icon-only fix-cursor-default' onclick='window.location.reload()'><i class='fa fa-redo fa-fw'></i></a>
+        <a class='nav icon-only fix-cursor-default' href='/'><i class='fa fa-home fa-fw'></i></a>
+      </li>
+      <hr>
+      
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=/archives/
+        
+        
+        
+        
+          id="archives"
+        >
+        <i class='fas fa-archive fa-fw'></i> 时间轴
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=/blog/tags/
+        
+        
+        
+        
+          id="blogtags"
+        >
+        <i class='fas fa-tags fa-fw'></i> 文章标签
+      </a>
+    </li>
+  
+        
+      
+        
+      
+        
+          <hr>
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=https://github.com/YouAge/MyHexoBlog/tree/master/hexo-theme-volantis
+        
+        
+        
+        
+          id="https:githubcomYouAgeMyHexoBlogtreemasterhexo-theme-volantis"
+        >
+        <i class='fa fa-code-branch fa-fw'></i> 本站源码
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=https://github.com/volantis-x/hexo-theme-volantis/
+        
+        
+        
+        
+          id="https:githubcomvolantis-xhexo-theme-volantis"
+        >
+        <i class='fa fa-code-branch fa-fw'></i> 主题源码
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' 
+        
+        
+        
+          onclick="document.execCommand('print')"
+        
+        >
+        <i class='fa fa-print fa-fw'></i> 打印页面
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          <li class='music name'>
+            <p class='nav music-title fix-cursor-default'></p>
+          </li>
+          <li class='music ctrl'>
+            <a class='nav icon-only backward fix-cursor-default' onclick='aplayerBackward()'><i class='fa fa-step-backward fa-fw'></i></a>
+            <a class='nav icon-only toggle fix-cursor-default' onclick='aplayerToggle()'><i class='fa fa-play fa-fw'></i></a>
+            <a class='nav icon-only forward fix-cursor-default' onclick='aplayerForward()'><i class='fa fa-step-forward fa-fw'></i></a>
+          </li>
+          <li class='music volume'>
+            <a class='nav volume'>
+              <div class="aplayer-volume-bar-wrap">
+                <div class="aplayer-volume-bar fix-cursor-pointer">
+                  <div class="aplayer-volume"></div>
+                  <i class='left fa fa-volume-off fa-fw'></i>
+                  <i class='right fa fa-volume-up fa-fw'></i>
+                </div>
+              </div>
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+  <script>
+    window.document.oncontextmenu = function (event) {
+      if (event.ctrlKey) return true;
+      if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true;
+      return popMenu(event);
+    };
+    document.addEventListener("click", function (event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      mymenu.style.display = "none";
+    });
+    function popMenu(event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      var menuContent = document.getElementById('rightmenu-content');
+      var screenWidth = document.documentElement.clientWidth || document.body.clientWidth;
+      var screenHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      mymenu.style.left = event.clientX + "px"; // 获取鼠标位置
+      mymenu.style.top = event.clientY + "px";
+      mymenu.style.display = 'block';
+      if (event.clientX * 2 > screenWidth) {
+        menuContent.classList.add('left');
+      } else {
+        menuContent.classList.remove('left');
+      }
+      if (event.clientY * 2 > screenHeight) {
+        menuContent.classList.add('top');
+      } else {
+        menuContent.classList.remove('top');
+      }
+
+      let hrText = document.getElementById('hr-text');
+      let hrSrc = document.getElementById('hr-src');
+      let hrHref = document.getElementById('hr-href');
+
+      // 选中图片
+      let copySrc = document.getElementById('menu-copy-src');
+      if (copySrc != undefined) {
+        if (event.target.currentSrc) {
+          copySrc.style.display = 'block';
+          copySrc.addEventListener("click", function (e) {
+            copyString(event.target.currentSrc);
+          },{once: true});
+          hrSrc.style.display = 'block';
+        } else {
+          copySrc.style.display = 'none';
+          hrSrc.style.display = 'none';
+        }
+      }
+
+      // 选中按钮
+      // 判断是不是按钮
+      let href = '';
+      if (event.path) {
+        for (i = 0; i < event.path.length; i++) {
+          if (event.path[i].href != undefined && event.path[i].href.length > 0) {
+            href = event.path[i].href;
+          }
+        }
+      }
+
+      let copyText = document.getElementById('menu-copy-text');
+      copyText.style.display = 'none';
+      hrText.style.display = 'none';
+      if (href.length == 0) {
+        // 选中文本
+        if (window.getSelection().toString()) {
+          copyText.style.display = 'block';
+          hrText.style.display = 'block';
+        }
+      }
+
+      // 在新标签页打开
+      let openHref = document.getElementById('menu-open-href');
+      if (openHref != undefined) {
+        if (href.length > 0) {
+          openHref.style.display = 'block';
+          openHref.addEventListener("click", function (e) {
+            window.open(href);
+          },{once: true});
+          hrHref.style.display = 'block';
+        } else {
+          openHref.style.display = 'none';
+          hrHref.style.display = 'none';
+        }
+      }
+      // 复制链接
+      let copyHref = document.getElementById('menu-copy-href');
+      if (copyHref != undefined) {
+        if (href.length > 0) {
+          copyHref.style.display = 'block';
+          copyHref.addEventListener("click", function (e) {
+            copyString(href);
+          },{once: true});
+        } else {
+          copyHref.style.display = 'none';
+        }
+      }
+
+      // 有音乐播放器
+      if (true == true) {
+        // 如果有aplayer，初始化一下
+      	try {
+      		checkAPlayer();
+          updateTitle();
+      	} catch (error) {
+      		console.log(error);
+      	}
+      }
+
+      return false; // 该行代码确保系统自带的右键菜单不会被调出
+    }
+    function hideMenu() {
+      document.getElementById('rightmenu-wrapper').style.display = 'none';
+    }
+    function copyString(str) {
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      document.body.appendChild(input);
+      input.setAttribute('value', str);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    }
+    document.execCommand('click');
+  </script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+
+
+  <script>
+    
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/" || "/";
+    if (!ROOT.endsWith('/')) ROOT += '/';
+  </script>
+
+
+
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@2/js/instant_page.js" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+
+
+
+  
+  
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        var imgs=["/img/banner/7.jpg"];
+        if ('true' == 'true') {
+          function shuffle(arr){
+            /*From countercurrent-time*/
+            var n = arr.length;
+            while(n--) {
+              var index = Math.floor(Math.random() * n);
+              var temp = arr[index];
+              arr[index] = arr[n];
+              arr[n] = temp;
+            }
+          }
+          shuffle(imgs);
+        }
+        if ('.cover') {
+          $('.cover').backstretch(
+            imgs,
+          {
+            duration: "20000",
+            fade: "1500"
+          });
+        } else {
+          $.backstretch(
+            imgs,
+          {
+            duration: "20000",
+            fade: "1500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+  <script>
+    let APlayerController = new Object();
+    APlayerController.id = '533953408';  // 设定全局音乐播放ID
+    APlayerController.volume = '0.7';
+  </script>
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
+
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js"></script>
+
+  
+    
+<script src="/js/aplayer.js"></script>
+
+  
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  var GUEST_INFO = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link'.split(',').filter(function (item) {
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var REQUIRED_FIELDS = ['nick', 'mail', 'link'];
+  var requiredFields = 'nick,mail'.split(',').filter(function (item) {
+    return REQUIRED_FIELDS.indexOf(item) > -1
+  });
+
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+
+  function pjax_valine() {
+    let pageUrl = $.trim($('#pjax-comment-path').text()) === "none" ? 
+      decodeURI(window.location.pathname) : $.trim($('#pjax-comment-path').text());
+    let pagePlaceholder = $.trim($('#pjax-comment-placeholder').text()) === "none" ?
+      "" : $.trim($('#"pjax-comment-placeholder').text());
+
+    let ALLPATH = '';
+    if(ALLPATH != '') pageUrl = ALLPATH;
+
+    var valine = new Valine();
+    valine.init({
+      el: '#valine_container',
+      meta: meta,
+      placeholder: pagePlaceholder,
+      path: pageUrl,
+      appId: "YBusDOkP8J9oyGYyYw5hRjyF-gzGzoHsz",
+      appKey: "ajaEnUBxE0LpSlSDnjKNzKSS",
+      pageSize: '10',
+      avatar: 'robohash',
+      lang: 'zh-cn',
+      visitor: 'true',
+      highlight: 'true',
+      mathJax: 'false',
+      enableQQ: 'true',
+      requiredFields: requiredFields,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps
+    })
+  }
+
+  $(function () {
+    pjax_valine();
+  });
+</script>
+
+
+
+
+<!-- darkmodejs -->
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5/lib/darkmode-js.min.js" aysc></script>
+
+  <script type="text/javascript">
+	function getClientHeight(){
+	  var clientHeight=0;
+	  if(document.body.clientHeight&&document.documentElement.clientHeight){
+	  var clientHeight = (document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
+	  }else{
+	  var clientHeight = (document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
+	  }
+	  return clientHeight;
+	}
+	function supportCss3(style) {
+		var prefix = ['webkit', 'Moz', 'ms', 'o'],
+		i,
+		humpString = [],
+		htmlStyle = document.documentElement.style,
+		_toHumb = function (string) {
+		return string.replace(/-(\w)/g, function ($0, $1) {
+		return $1.toUpperCase();
+		});
+		};
+		for (i in prefix)
+		humpString.push(_toHumb(prefix[i] + '-' + style));
+		humpString.push(_toHumb(style));
+		for (i in humpString)
+		if (humpString[i] in htmlStyle) return true;
+		return false;
+	};
+	//配置信息
+	var options = {
+	  bottom: '32px',
+	  right: 'unset',
+	  left: '16px',
+	  time: '0s',
+	  mixColor: '#f4f4f4',
+	  backgroundColor: '#f4f4f4',
+	  buttonColorDark: '#100f2c',
+	  buttonColorLight: '#f4f4f4',
+	  saveInCookies: true,
+	  label: '🌓',
+	  autoMatchOsTheme: true
+	};
+	// 卡片兼容处理 mix-blend-mode 与 effect: [shadow, floatable, blur] 冲突???
+	function pjax_darkmodejs(){
+		
+	}
+	// mix-blend-mode support?
+	if(supportCss3('mix-blend-mode')){
+		const darkmode = new Darkmode(options);
+		darkmode.showWidget();
+		pjax_darkmodejs();
+	}
+  </script>
+
+
+<!-- 复制 -->
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+</script>
+
+
+<!-- scrollreveal -->
+
+<!-- ******************************** -->
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  function pjax_fancybox() {
+    $(".article-entry").find("img").not('.inline').not('a img').each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".article-entry").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  $(function () {
+    pjax_fancybox();
+  });
+</script>
+
+<!-- ******************************** -->
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+
+  
+    
+<script src="/js/search.js"></script>
+
+  
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js" data-pjax></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@2/js/comment_typing.js"></script>
+
+
+
+
+
+
+
+    
+      
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+    <div id="loading-bar-wrapper"><script>NProgress.configure({parent:"#loading-bar-wrapper",trickleSpeed: 100})</script></div>
+    <script>
+      window.ShowLoading = function() {
+        NProgress.start();
+      };
+      window.HideLoading = function() {
+        NProgress.done();
+      }
+    </script>
+  
+</div>
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+      $.fancybox.close();    // 关闭弹窗
+      $('.l_header .switcher .s-search').removeClass('active'); // 关闭移动端激活的搜索框
+      $('.l_header').removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      $('.wrapper').removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      $('.s-top').unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+      window.ShowLoading();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      // 关于百度统计对 SPA 页面的处理：
+      // 方案一：百度统计>管理>单页应用设置中，打开开启按钮即可对SPA进行统计。 https://tongji.baidu.com/web/help/article?id=324
+      // 方案二：取消注释下列代码。 https://tongji.baidu.com/web/help/article?id=235
+      // 
+
+      // 关于谷歌统计对 SPA 页面的处理：
+      // 当应用以动态方式加载内容并更新地址栏中的网址时，也应该更新通过 gtag.js 存储的网页网址。
+      // https://developers.google.cn/analytics/devguides/collection/gtagjs/single-page-applications?hl=zh-cn
+      
+
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+
+      try{
+        pjax_fancybox();
+        
+          
+          if ('.cover') {
+            $('.cover').backstretch("resize");
+          } else {
+            $.backstretch("resize");
+          }
+        
+        
+        
+        
+          pjax_initCopyCode();
+        
+        
+          pjax_valine();
+        
+        
+        
+        
+        
+          pjax_darkmodejs();
+        
+      } catch (e) {
+        console.log(e);
+      }
+      window.HideLoading();
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+      window.HideLoading();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+
+    
+  </div>
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: true,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+</html>

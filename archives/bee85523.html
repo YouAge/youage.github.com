@@ -1,0 +1,2355 @@
+<!DOCTYPE html>
+<html>
+<head hexo-theme='https://volantis.js.org/#3.0-beta2'>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="J168966tuJ" />
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- 页面元数据 -->
+  
+  <title>postgresql查询 - 逸枫</title>
+  
+    <meta name="keywords" content="PostgreSql">
+  
+
+  
+    <meta name="description" content="
+公司使用的PostgreSql库，学习一下，写一些视图查询， 跟mysql基本上是长不多，在某些地方存在细微差距， 底层原理咋也不过多深入， 满足了工作中日常使用
+
+window安装
+下载地址 https://www.enterprisedb.com/downloads/postgres-postgresql-...">
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+    
+      <meta name="msapplication-TileColor" content="#ffffff">
+    
+      <meta name="msapplication-config" content="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/browserconfig.xml">
+    
+      <meta name="theme-color" content="#ffffff">
+    
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13/css/all.min.css">
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+
+  
+
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/favicon/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
+  
+
+  
+
+  <!-- import link -->
+  
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/favicon-16x16.png">
+  <link rel="manifest" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/site.webmanifest">
+  <link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/favicon.ico">
+  
+
+  
+  
+    
+<link rel="stylesheet" href="/css/style.css">
+
+  
+
+  
+  
+</head>
+
+<body>
+  
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post' style="display: none;">
+      <div class='cover-body'>
+  <div class='a'>
+    
+      <img no-lazy class='logo' src='/img/logo.png'/>
+    
+    
+      <p class="title">欢迎光临，逸枫驿站！</p>
+    
+
+  </div>
+    
+        <span class="subtitle">让我们一起守护，十年之约...</span>
+    
+  <div class='b'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="世界之大，探索一下..." />
+          <i class="icon fas fa-search fa-fw"></i>
+        </form>
+      </div>
+    
+    <div class='menu navigation search'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <i class='fas fa-home fa-fw fa-fw'></i><p>主页</p>
+            </a>
+          
+            <a href="/blog/categories/"
+              
+              
+              id="blogcategories">
+              <i class='fas fa-folder-open fa-fw'></i><p>分类</p>
+            </a>
+          
+            <a href="/blog/tags/"
+              
+              
+              id="blogtags">
+              <i class='fas fa-tags fa-fw'></i><p>标签</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <i class='fas fa-archive fa-fw'></i><p>归档</p>
+            </a>
+          
+            <a href="/blog/link/"
+              
+              
+              id="bloglink">
+              <i class='fas fa-link fa-fw'></i><p>友链</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <i class='fas fa-info-circle fa-fw'></i><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+    </cover>
+    <header class="l_header shadow blur">
+  <div class='container'>
+  <div class='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a class="s-comment fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='/img/logo.png'/>
+          
+          
+          
+           <span>逸枫</span>
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-home fa-fw fa-fw'></i>首页
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/categories/
+                  
+                  
+                  
+                    id="blogcategories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/tags/
+                  
+                  
+                  
+                    id="blogtags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/link/
+                  
+                  
+                  
+                    id="bloglink"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>更多
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=https://github.com/YouAge/youage.github.com
+                  
+                  
+                  
+                    id="https:githubcomYouAgeyouagegithubcom"
+                  >
+                  主题源码
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" 
+                  
+                  
+                  >
+                  有疑问？
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=/faqs/
+                  
+                  
+                  
+                    id="faqs"
+                  >
+                  看 FAQ
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=https://github.com/YouAge/MyHexoBlog/tree/master/hexo-theme-volantis
+                  
+                  
+                  
+                    id="https:githubcomYouAgeMyHexoBlogtreemasterhexo-theme-volantis"
+                  >
+                  看 本站源码
+                </a>
+                
+              </li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              
+                <li>
+                  <a class="menuitem flat-box">
+                    <i class='fas fa-compact-disc fa-fw music'></i>背景音乐
+                  </a>
+                  <ul class="list-v">
+                    <li>
+                      <div class="aplayer-container">
+                        
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='533953408'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+                      </div>
+                    </li>
+                  </ul>
+                <li>
+              
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-home fa-fw fa-fw'></i>首页
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/categories/
+                  
+                  
+                  
+                    id="blogcategories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/tags/
+                  
+                  
+                  
+                    id="blogtags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/blog/link/
+                  
+                  
+                  
+                    id="bloglink"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>更多
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=https://github.com/YouAge/youage.github.com
+                  
+                  
+                  
+                    id="https:githubcomYouAgeyouagegithubcom"
+                  >
+                  主题源码
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" 
+                  
+                  
+                  >
+                  有疑问？
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=/faqs/
+                  
+                  
+                  
+                    id="faqs"
+                  >
+                  看 FAQ
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box" href=https://github.com/YouAge/MyHexoBlog/tree/master/hexo-theme-volantis
+                  
+                  
+                  
+                    id="https:githubcomYouAgeMyHexoBlogtreemasterhexo-theme-volantis"
+                  >
+                  看 本站源码
+                </a>
+                
+              </li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+  </div>
+  
+
+
+  <div class="l_body nocover">
+    <div class='body-wrapper' id="pjax-container">
+      
+        <!--此文件用来存放一些不方便取值的变量--> 
+<!--思路大概是将值藏到重加载的区域内--> 
+ 
+ 
+ 
+<div id="pjax-data" style="display: none"> 
+  <div id="pjax-ispage">true</div> 
+  <div id="pjax-pageTitle">postgresql查询</div> 
+  <div id="pjax-enable-cover">true</div> 
+  <div id="pjax-comment-path">none</div> 
+  <div id="pjax-comment-placeholder">none</div> 
+</div> 
+ 
+ 
+<script> 
+  // 处理封面 此时 jquery 还没加载 
+  if ("none" == "none") { // 移除封面 
+    document.getElementsByClassName('cover')[0].style.display = "none"; 
+    document.getElementsByClassName('l_body')[0].classList.add("nocover"); 
+    document.getElementsByClassName('l_header', 'cover-wrapper')[0].classList.add("show"); 
+  } else { 
+    if ("none" == "blog") { // 半屏 
+      document.getElementsByClassName('cover')[0].classList.remove("full"); 
+      document.getElementsByClassName('cover')[0].classList.add("half"); 
+      document.getElementsByClassName('scroll-down')[0].style.display = "none"; 
+    } else if ("none" == "docs") { // 全屏 
+      document.getElementsByClassName('cover')[0].classList.remove("half"); 
+      document.getElementsByClassName('cover')[0].classList.add("full"); 
+      document.getElementsByClassName('scroll-down')[0].style.display = ""; 
+    } 
+    document.getElementsByClassName('cover')[0].style.display = ""; 
+    document.getElementsByClassName('l_body', 'show')[0].classList.remove("nocover"); 
+    document.getElementsByClassName('l_header', 'cover-wrapper')[0].classList.remove("show"); 
+  } 
+</script> 
+
+      
+      
+
+<div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box reveal shadow article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+      
+      
+      <div class="meta" id="header-meta">
+        
+          
+  <h1 class="title">
+    <a href="/archives/bee85523.html">
+      postgresql查询
+    </a>
+  </h1>
+
+
+        
+        <div class='new-meta-box'>
+          
+            
+          
+            
+              
+<div class='new-meta-item author'>
+  <a class='author' href="" rel="nofollow">
+    <img no-lazy src="">
+    <p></p>
+  </a>
+</div>
+
+            
+          
+            
+              <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2020年7月14日</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/postgresql/' rel="nofollow">
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <p>数据库/PostgreSql</p>
+    </a>
+  </div>
+
+
+            
+          
+            
+              
+  <div class="new-meta-item browse valine">
+    <a class='notlink'>
+      <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+      
+      <span id="/archives/bee85523.html" class="leancloud_visitors" data-flag-title="postgresql查询">
+      <p>
+        <span class="leancloud-visitors-count"></span>
+      </p>
+      </span>
+    </a>
+  </div>
+
+
+            
+          
+            
+          
+        </div>
+        
+          <hr>
+        
+      </div>
+    
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          
+          <blockquote>
+<p>公司使用的PostgreSql库，学习一下，写一些视图查询， 跟mysql基本上是长不多，在某些地方存在细微差距， 底层原理咋也不过多深入， 满足了工作中日常使用</p>
+</blockquote>
+<h2 id="window安装"><a href="#window安装" class="headerlink" title="window安装"></a>window安装</h2><ol>
+<li>下载地址 <a target="_blank" rel="noopener" href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</a></li>
+<li>下一步，全勾上，设置密码， 去掉勾选，直接点 Finish，完成</li>
+</ol>
+<h2 id="设置pgAdmin4-为中文"><a href="#设置pgAdmin4-为中文" class="headerlink" title="设置pgAdmin4 为中文"></a>设置pgAdmin4 为中文</h2><ol>
+<li>点击 file-1-选择语言</li>
+</ol>
+<h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><h2 id="python操作postgresql"><a href="#python操作postgresql" class="headerlink" title="python操作postgresql"></a>python操作postgresql</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> psycopg2</span><br><span class="line">conn = psycopg2.connect(database=<span class="string">&quot;postgres&quot;</span>, user=<span class="string">&quot;postgres&quot;</span>, password=<span class="string">&quot;123456789&quot;</span>, host=<span class="string">&quot;10.128.212.164&quot;</span>, port=<span class="string">&quot;5432&quot;</span>)</span><br><span class="line">cur = conn.cursor()  <span class="comment"># 创建指针对象</span></span><br><span class="line">cur.execute(<span class="string">&quot;select * from statu&quot;</span>)</span><br><span class="line">results = cur.fetchall()</span><br><span class="line">conn.commit()</span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<h2 id="python-Pandas-读取和写入数据库"><a href="#python-Pandas-读取和写入数据库" class="headerlink" title="python Pandas 读取和写入数据库"></a>python Pandas 读取和写入数据库</h2><h3 id="读取数据库"><a href="#读取数据库" class="headerlink" title="读取数据库"></a>读取数据库</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> psycopg2</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件</span></span><br><span class="line">localhost=dict(</span><br><span class="line">    database=<span class="string">&quot;demo1&quot;</span>,</span><br><span class="line">    user=<span class="string">&quot;postgres&quot;</span>,</span><br><span class="line">    password=<span class="string">&quot;123456789&quot;</span>,</span><br><span class="line">    host=<span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">    port=<span class="string">&quot;5432&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">redPostGresql</span>(<span class="params">config,sql</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;读取数据 config配置文件 sql语句&quot;&quot;&quot;</span></span><br><span class="line">    conn = psycopg2.connect(**config)  <span class="comment"># 连接数据库</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        data = pd.read_sql(sql, con=conn) <span class="comment"># 读取数据库数据</span></span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print(e)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        conn.close()</span><br><span class="line"><span class="comment"># 直接获取数据库数据， 以DataFrame格式返回，（）</span></span><br><span class="line">IfsstepID = redPostGresql(cnctum0pgsql02,<span class="string">&#x27;SELECT * FROM &quot;Report&quot;.&quot;IFSStepID&quot;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="写入数据库"><a href="#写入数据库" class="headerlink" title="写入数据库"></a>写入数据库</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="comment"># 创建连接</span></span><br><span class="line">engine = create_engine(<span class="string">&quot;postgresql://postgres:123456789@localhost:5432/demo1&quot;</span>) </span><br><span class="line"><span class="comment"># 获取要写入的数据，</span></span><br><span class="line">posData = pd.DataFrame(snWIPlist)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">     <span class="string">&quot;&quot;&quot;if_exists：</span></span><br><span class="line"><span class="string">    * fail: Raise a ValueError.</span></span><br><span class="line"><span class="string">    * replace: Drop the table before inserting new values.</span></span><br><span class="line"><span class="string">    * append: Insert new values to the existing table.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    posData.to_sql(<span class="string">&#x27;wip&#x27;</span>,engine,index=<span class="literal">False</span>,if_exists=<span class="string">&#x27;replace&#x27;</span>) <span class="comment"># 写入数据库</span></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    print(e)</span><br></pre></td></tr></table></figure>
+
+<h3 id="LIKE-模糊查询"><a href="#LIKE-模糊查询" class="headerlink" title="LIKE 模糊查询"></a>LIKE 模糊查询</h3><h4 id=""><a href="#" class="headerlink" title="%"></a>%</h4><blockquote>
+<p>任意0个和多个字符</p>
+</blockquote>
+<h4 id="-1"><a href="#-1" class="headerlink" title="_"></a>_</h4><blockquote>
+<p>任意单个字符</p>
+</blockquote>
+<h4 id="-2"><a href="#-2" class="headerlink" title="[]"></a>[]</h4><blockquote>
+<p>[正则表达式]</p>
+</blockquote>
+<h4 id="-3"><a href="#-3" class="headerlink" title="[^]"></a>[^]</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *  <span class="keyword">FROM</span> <span class="string">&quot;public&quot;</span>.ifactoryreportdata  <span class="keyword">WHERE</span>  daytime &gt;=<span class="string">&#x27;2020-07-09&#x27;</span> <span class="keyword">and</span> daytime &lt;=<span class="string">&#x27;2020-07-23&#x27;</span>  <span class="keyword">and</span> reportname <span class="keyword">LIKE</span> <span class="string">&#x27;ic(ng)%&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="时间段查询"><a href="#时间段查询" class="headerlink" title="时间段查询"></a>时间段查询</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">方法一：</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user_info <span class="keyword">where</span> create_date&gt;= <span class="string">&#x27;2015-07-01&#x27;</span> <span class="keyword">and</span> create_date &lt; <span class="string">&#x27;2015-08-15&#x27;</span>;</span><br><span class="line"> </span><br><span class="line">方法二：</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user_info <span class="keyword">where</span> create_date <span class="keyword">between</span> <span class="string">&#x27;2015-07-01&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;2015-08-15&#x27;</span>;</span><br><span class="line"> </span><br><span class="line">方法三：</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user_info <span class="keyword">where</span> create_date &gt;= <span class="string">&#x27;2015-07-01&#x27;</span>::<span class="built_in">timestamp</span> <span class="keyword">and</span> create_date &lt; <span class="string">&#x27;2015-08-15&#x27;</span>::<span class="built_in">timestamp</span>;</span><br><span class="line"> </span><br><span class="line">方法四：</span><br><span class="line"> </span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user_info <span class="keyword">where</span> create_date <span class="keyword">between</span> <span class="keyword">to_date</span>(<span class="string">&#x27;2015-07-01&#x27;</span>,<span class="string">&#x27;YYYY-MM-DD&#x27;</span>) <span class="keyword">and</span> <span class="keyword">to_date</span>(<span class="string">&#x27;2015-08-15&#x27;</span>,<span class="string">&#x27;YYYY-MM-DD&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user_info <span class="keyword">where</span> create_date <span class="keyword">between</span> <span class="keyword">to_date</span>(<span class="string">&#x27;2015-07-01&#x27;</span>,<span class="string">&#x27;yyyy-mm-dd hh24:mi:ss&#x27;</span>) <span class="keyword">and</span> <span class="keyword">to_date</span>(<span class="string">&#x27;2015-08-15&#x27;</span>,<span class="string">&#x27;yyyy-mm-dd hh24:mi:ss&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="表连接"><a href="#表连接" class="headerlink" title="表连接"></a>表连接</h3><h3 id="union不合并重复数据"><a href="#union不合并重复数据" class="headerlink" title="union不合并重复数据"></a>union不合并重复数据</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> T1 <span class="keyword">union</span> <span class="keyword">all</span> <span class="keyword">select</span> * <span class="keyword">from</span> T2 </span><br></pre></td></tr></table></figure>
+
+<h3 id="union合并重复数据"><a href="#union合并重复数据" class="headerlink" title="union合并重复数据"></a>union合并重复数据</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> T1 <span class="keyword">union</span> <span class="keyword">select</span> * <span class="keyword">from</span> T2 </span><br></pre></td></tr></table></figure>
+
+<h3 id="except-左查询中返回右查询没有找到的所有非重复值"><a href="#except-左查询中返回右查询没有找到的所有非重复值" class="headerlink" title="except 左查询中返回右查询没有找到的所有非重复值"></a>except 左查询中返回右查询没有找到的所有非重复值</h3><h3 id="intersect-两个结果集的交集（即两个查询都返回的所有非重复值）"><a href="#intersect-两个结果集的交集（即两个查询都返回的所有非重复值）" class="headerlink" title="intersect 两个结果集的交集（即两个查询都返回的所有非重复值）"></a>intersect 两个结果集的交集（即两个查询都返回的所有非重复值）</h3><h3 id="关联查询"><a href="#关联查询" class="headerlink" title="关联查询"></a>关联查询</h3><ol>
+<li><code>inner join</code> 内连接查询 (2表 合并，显示相同的数据)</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.*,b.* <span class="keyword">FROM</span> table_a a <span class="keyword">INNER</span> <span class="keyword">JOIN</span> table_b b <span class="keyword">ON</span> a.id=b.id</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>left jion</code> 左关联查询</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.*,b.* <span class="keyword">FROM</span> table_a a <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> table_b b <span class="keyword">ON</span> a.id=b.id</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>right join 右关联查询 </p>
+</li>
+<li><p>左连接-内连接 （取左表的部分集合，但又不存在右表中）</p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.*,b.* <span class="keyword">FROM</span> table_a a <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> table_b b <span class="keyword">ON</span> a.id=b.id <span class="keyword">WHERE</span> b.id <span class="keyword">IS</span> <span class="literal">NULL</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- SELECT a.*,b.* FROM table_a a LEFT JOIN table_b b ON a.id=b.id WHERE b.id IS NULL  只需要几秒钟中完成</span></span><br><span class="line">    <span class="comment">-- SELECT a.*,b.* FROM table_a a LEFT JOIN table_b b ON a.id !=b.id   谨慎测试，单机十几万的数据，直接把库跑挂了</span></span><br><span class="line">    <span class="comment">-- 根据测试，，你会发现， 后者比前者的查询速度相差太大了</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>右连接-内连接 (取有表的部分数据，但又不存在左表中)</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.*,b.* <span class="keyword">FROM</span> table_a a <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> table_b b <span class="keyword">ON</span> a.id=b.id <span class="keyword">WHERE</span> a.id <span class="keyword">IS</span> <span class="literal">NULL</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="创建临时表查询-whit"><a href="#创建临时表查询-whit" class="headerlink" title="创建临时表查询 whit"></a>创建临时表查询 whit</h2><ol>
+<li><code> WITH abcd AS (select * from table)</code> 语法</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 例如</span></span><br><span class="line"> <span class="keyword">WITH</span> abcd <span class="keyword">AS</span> (</span><br><span class="line">         <span class="keyword">SELECT</span> a.<span class="string">&quot;SN&quot;</span>,</span><br><span class="line">            a.<span class="string">&quot;Process&quot;</span>,</span><br><span class="line">            a.<span class="string">&quot;ProcessID&quot;</span>,</span><br><span class="line">            to_char(<span class="keyword">now</span>(), <span class="string">&#x27;yyyy-mm-dd&#x27;</span>::<span class="built_in">text</span>) <span class="keyword">AS</span> lasttime,</span><br><span class="line">            a.<span class="string">&quot;Project&quot;</span></span><br><span class="line">           <span class="keyword">FROM</span> <span class="string">&quot;Report&quot;</span>.<span class="string">&quot;mainSnWithFirstTimeStationAndResult&quot;</span> a</span><br><span class="line">          <span class="keyword">WHERE</span> (to_char(<span class="keyword">now</span>(), <span class="string">&#x27;yyyy-mm-dd&#x27;</span>::<span class="built_in">text</span>) = to_char(a.<span class="string">&quot;FirstTime&quot;</span>, <span class="string">&#x27;yyyy-mm-dd&#x27;</span>::<span class="built_in">text</span>))</span><br><span class="line">        )</span><br><span class="line"> <span class="keyword">SELECT</span> a.<span class="string">&quot;SN&quot;</span>,</span><br><span class="line">    <span class="keyword">upper</span>((a.<span class="string">&quot;Process&quot;</span>)::<span class="built_in">text</span>) <span class="keyword">AS</span> process,</span><br><span class="line">    a.lasttime,</span><br><span class="line">    a.<span class="string">&quot;ProcessID&quot;</span>,</span><br><span class="line">    a.<span class="string">&quot;Project&quot;</span></span><br><span class="line">   <span class="keyword">FROM</span> abcd a</span><br><span class="line">  <span class="keyword">WHERE</span> (<span class="string">&quot;RawData&quot;</span>.isnumeric(a.<span class="string">&quot;Process&quot;</span>) &lt;&gt; <span class="literal">true</span>)</span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line"> <span class="keyword">SELECT</span> a.<span class="string">&quot;SN&quot;</span>,</span><br><span class="line">    <span class="keyword">upper</span>(b.<span class="string">&quot;StepName&quot;</span>) <span class="keyword">AS</span> process,</span><br><span class="line">    a.lasttime,</span><br><span class="line">    a.<span class="string">&quot;ProcessID&quot;</span>,</span><br><span class="line">    a.<span class="string">&quot;Project&quot;</span></span><br><span class="line">   <span class="keyword">FROM</span> (abcd a</span><br><span class="line">     <span class="keyword">JOIN</span> <span class="string">&quot;Report&quot;</span>.<span class="string">&quot;IFSStepID&quot;</span> b <span class="keyword">ON</span> (((a.<span class="string">&quot;Process&quot;</span>)::<span class="built_in">text</span> = b.<span class="string">&quot;StepID&quot;</span>)));</span><br><span class="line"></span><br><span class="line">   <span class="comment">-- 创建 临时表 abcd， </span></span><br><span class="line"><span class="comment">-- 创建多个临时表， 只需要用 , 分割就好， 最后一定要有sql语句</span></span><br><span class="line"><span class="comment">-- 多个语句语法语法</span></span><br><span class="line"><span class="keyword">WITH</span> so1 <span class="keyword">AS</span> (),so2 <span class="keyword">AS</span>(),so3 <span class="keyword">AS</span> ()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="排序ORDER-BY"><a href="#排序ORDER-BY" class="headerlink" title="排序ORDER BY"></a>排序ORDER BY</h2><blockquote>
+<p>查询后，按什么字段排序 升序：<code>ASC</code>；降序：<code>DESC</code>；</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 例句：</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="聚合查询-分组"><a href="#聚合查询-分组" class="headerlink" title="聚合查询,分组"></a>聚合查询,分组</h2><blockquote>
+<p>GROUP BY我们可以先从字面上来理解，GROUP表示分组，BY后面写字段名，就表示根据哪个字段进行分组，如果有用Excel比较多的话，GROUP BY比较类似Excel里面的透视表。<br>GROUP BY必须得配合聚合函数来用，分组之后你可以计数（COUNT），求和（SUM），求平均数（AVG）等</p>
+</blockquote>
+<h3 id="常用的-聚合查询"><a href="#常用的-聚合查询" class="headerlink" title="常用的 聚合查询"></a>常用的 聚合查询</h3><blockquote>
+<ol>
+<li><code>count()</code> 计数</li>
+<li><code>sum()</code> 求和</li>
+<li><code>avg()</code> 平均数</li>
+<li><code>max()</code> 最大值</li>
+<li><code>min()</code> 最小值</li>
+</ol>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 以a.customer, a.factory, a.lineid, a.reportprocess, a.wip分组， 计算sum(a.sn) 的值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> a.customer,</span><br><span class="line">    a.factory,</span><br><span class="line">    a.lineid,</span><br><span class="line">    a.reportprocess,</span><br><span class="line">    a.wip,</span><br><span class="line">    to_char(<span class="keyword">now</span>(), <span class="string">&#x27;yyyy-mm-dd&#x27;</span>::<span class="built_in">text</span>) <span class="keyword">AS</span> lasttime,</span><br><span class="line">    <span class="keyword">sum</span>(a.sn) <span class="keyword">AS</span> wipsn</span><br><span class="line">   <span class="keyword">FROM</span> stationamecount a</span><br><span class="line">  <span class="keyword">GROUP</span> <span class="keyword">BY</span> a.customer, a.factory, a.lineid, a.reportprocess, a.wip;</span><br></pre></td></tr></table></figure>
+
+<h3 id="HAVING-筛选"><a href="#HAVING-筛选" class="headerlink" title="HAVING 筛选"></a>HAVING 筛选</h3><blockquote>
+<p><code>HAVING</code>是对于<code>GROUP BY</code>对象进行筛选， 可以使用聚合函数筛选</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.customer,</span><br><span class="line">    a.factory,</span><br><span class="line">    a.lineid,</span><br><span class="line">    a.reportprocess,</span><br><span class="line">    a.wip,</span><br><span class="line">    to_char(<span class="keyword">now</span>(), <span class="string">&#x27;yyyy-mm-dd&#x27;</span>::<span class="built_in">text</span>) <span class="keyword">AS</span> lasttime,</span><br><span class="line">    <span class="keyword">sum</span>(a.sn) <span class="keyword">AS</span> wipsn</span><br><span class="line">   <span class="keyword">FROM</span> stationamecount a</span><br><span class="line">  <span class="keyword">GROUP</span> <span class="keyword">BY</span> a.customer, a.factory, a.lineid, a.reportprocess, a.wip</span><br><span class="line">  <span class="keyword">HAVING</span> a.wip=<span class="string">&#x27;yes&#x27;</span>  <span class="comment">-- 筛选除 wip=yes的 组， </span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Postgresql-子查询"><a href="#Postgresql-子查询" class="headerlink" title="Postgresql 子查询"></a>Postgresql 子查询</h2><blockquote>
+<p>子查询或称为内部查询、嵌套查询，指的是在 PostgreSQL 查询中的 WHERE 子句中嵌入查询语句</p>
+</blockquote>
+<h2 id="函数集"><a href="#函数集" class="headerlink" title="函数集"></a>函数集</h2><h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><h4 id="initcap-首字母大写"><a href="#initcap-首字母大写" class="headerlink" title="initcap(首字母大写)"></a>initcap(首字母大写)</h4><h4 id="lower-字母全部小写"><a href="#lower-字母全部小写" class="headerlink" title="lower(字母全部小写)"></a>lower(字母全部小写)</h4><h4 id="upper-字母全部大写"><a href="#upper-字母全部大写" class="headerlink" title="upper(字母全部大写)"></a>upper(字母全部大写)</h4><h3 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数"></a>日期函数</h3><h4 id="now-获取当前日期"><a href="#now-获取当前日期" class="headerlink" title="now() 获取当前日期"></a>now() 获取当前日期</h4><h4 id="localtime-当前时间-SELECT-localtime"><a href="#localtime-当前时间-SELECT-localtime" class="headerlink" title="localtime 当前时间 SELECT localtime"></a>localtime 当前时间 <code>SELECT localtime</code></h4><h4 id="localtimestamp-当前日期和时间-SELECT-localtimestamp"><a href="#localtimestamp-当前日期和时间-SELECT-localtimestamp" class="headerlink" title="localtimestamp 当前日期和时间 SELECT localtimestamp"></a>localtimestamp 当前日期和时间 <code>SELECT localtimestamp</code></h4><h4 id="current-date-当前日期-select-current-date"><a href="#current-date-当前日期-select-current-date" class="headerlink" title="current_date 当前日期 select current_date;"></a>current_date 当前日期 <code>select current_date;</code></h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">to_char(now(), &#x27;yyyy-mm-dd&#x27;::text) <span class="comment">-- 2020-07-14</span></span><br></pre></td></tr></table></figure>
+<h4 id="timeofday-当前日期和时间"><a href="#timeofday-当前日期和时间" class="headerlink" title="timeofday()当前日期和时间"></a>timeofday()当前日期和时间</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> timeofday()</span><br><span class="line"><span class="comment">-- Tue Jul 14 09:32:24.894371 2020 HKT</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 时间计算</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">now</span>() + <span class="built_in">interval</span> <span class="string">&#x27;1 years&#x27;</span> <span class="comment">-- 一年后 </span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">now</span>() + <span class="built_in">interval</span> <span class="string">&#x27;1 month&#x27;</span> <span class="comment">-- 一月后</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">now</span>() - <span class="built_in">interval</span> <span class="string">&#x27;3 week&#x27;</span>  <span class="comment">--三周后</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">now</span>() + <span class="string">&#x27;10 min&#x27;</span> <span class="comment">-- 10分钟后</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">now</span>() + <span class="string">&#x27;10 D&#x27;</span>      <span class="comment">-- 一天后</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Abbreviation    Meaning</span></span><br><span class="line"><span class="comment">    Y            Years</span></span><br><span class="line"><span class="comment">    M            Months (in the date part)</span></span><br><span class="line"><span class="comment">    W            Weeks</span></span><br><span class="line"><span class="comment">    D            Days</span></span><br><span class="line"><span class="comment">    H            Hours</span></span><br><span class="line"><span class="comment">    M            Minutes (in the time part)</span></span><br><span class="line"><span class="comment">    S            Seconds</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="age-计算2个时间差"><a href="#age-计算2个时间差" class="headerlink" title="age() 计算2个时间差"></a>age() 计算2个时间差</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">select</span> age(<span class="built_in">timestamp</span> <span class="string">&#x27;2019-09-15&#x27;</span>); <span class="comment">-- 9 mons 29 days</span></span><br><span class="line"><span class="keyword">select</span> age(<span class="keyword">now</span>(), <span class="built_in">timestamp</span> <span class="string">&#x27;2022-02-05&#x27;</span>); <span class="comment">-- -1 years -6 mons -21 days -14:12:19.288452</span></span><br><span class="line"><span class="keyword">select</span> age(<span class="keyword">now</span>(), <span class="built_in">timestamp</span> <span class="string">&#x27;2019-02-05&#x27;</span>); <span class="comment">-- 1 year 5 mons 9 days 09:48:08.012659</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="EXTRACT-field-FROM-source-时间字段截取"><a href="#EXTRACT-field-FROM-source-时间字段截取" class="headerlink" title="EXTRACT(field FROM source)时间字段截取"></a>EXTRACT(field FROM source)时间字段截取</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 获取年</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">extract</span>(<span class="keyword">year</span> <span class="keyword">from</span> <span class="keyword">now</span>()); </span><br><span class="line"></span><br><span class="line"><span class="comment">-- 获取月份</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">extract</span>(<span class="keyword">month</span> <span class="keyword">from</span> <span class="keyword">now</span>());    </span><br><span class="line"></span><br><span class="line"><span class="comment">-- 获取 天数</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">extract</span>(<span class="keyword">day</span> <span class="keyword">from</span> <span class="built_in">timestamp</span> <span class="string">&#x27;2013-04-13&#x27;</span>);</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">EXTRACT</span>(<span class="keyword">DAY</span> <span class="keyword">FROM</span> <span class="built_in">INTERVAL</span> <span class="string">&#x27;40 days 1 minute&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看今天是一年中的多少天</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">extract</span>(doy <span class="keyword">from</span> <span class="keyword">now</span>());</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="转换函数"><a href="#转换函数" class="headerlink" title="转换函数"></a>转换函数</h3><h4 id="to-number-数值类型的字符-将字符转换为数值"><a href="#to-number-数值类型的字符-将字符转换为数值" class="headerlink" title="to_number(数值类型的字符):将字符转换为数值"></a>to_number(数值类型的字符):将字符转换为数值</h4><h4 id="to-char-数值或者是日期-将数值或者日期转换为字符"><a href="#to-char-数值或者是日期-将数值或者日期转换为字符" class="headerlink" title="to_char(数值或者是日期):将数值或者日期转换为字符"></a>to_char(数值或者是日期):将数值或者日期转换为字符</h4><h4 id="to-date-日期格式的字符-：将字符转换为日期"><a href="#to-date-日期格式的字符-：将字符转换为日期" class="headerlink" title="to_date(日期格式的字符)：将字符转换为日期"></a>to_date(日期格式的字符)：将字符转换为日期</h4><h3 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h3><h4 id="函数基本语法"><a href="#函数基本语法" class="headerlink" title="函数基本语法"></a>函数基本语法</h4><blockquote>
+<p>实践中，官方函数没法满足需求，就需要自己写函数， 那么了解 函数的语法构建</p>
+</blockquote>
+<blockquote>
+<p>自定义函数像内置函数一样返回标量值，也可以将结果集用表格变量返回。sql函数必须有返回值</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义函数整理"><a href="#自定义函数整理" class="headerlink" title="自定义函数整理"></a>自定义函数整理</h4><h5 id="判断为存数字函数"><a href="#判断为存数字函数" class="headerlink" title="判断为存数字函数"></a>判断为存数字函数</h5><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span></span><br><span class="line"><span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">FUNCTION</span> isnumeric (txtStr <span class="built_in">VARCHAR</span>) <span class="keyword">RETURNS</span> <span class="built_in">BOOLEAN</span> <span class="keyword">AS</span> $$</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    <span class="keyword">RETURN</span> txtStr ~ <span class="string">&#x27;^([0-9]+[.]?[0-9]*|[.][0-9]+)$&#x27;</span> ;</span><br><span class="line"><span class="keyword">END</span> ; $$ LANGUAGE &#x27;plpgsql&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ALTER-TABLE-曾删表的列"><a href="#ALTER-TABLE-曾删表的列" class="headerlink" title="ALTER TABLE 曾删表的列"></a>ALTER TABLE 曾删表的列</h3><blockquote>
+<p>alter table命令用于添加、修改、删除一张已经存在表的列, 也可以添加，删除约束</p>
+</blockquote>
+<p><strong>语法</strong></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- table_name ：表名 ; column_name：新列名; datatype：数据类型</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name <span class="keyword">ADD</span> column_name datatype;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><blockquote>
+<p>视图： 就是查询语句的别名，生成的新的表</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> viewName <span class="keyword">AS</span> <span class="keyword">select</span> <span class="keyword">name</span>,<span class="keyword">id</span>,age <span class="keyword">FROM</span> student <span class="keyword">WITH</span> <span class="keyword">id</span>&gt;<span class="number">5</span>;</span><br><span class="line"><span class="comment">-- 这样 viewName 就是一个视图， 可以理解为一张新的表在数据库了</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><blockquote>
+<p>一组操作，要么成功，要么失败</p>
+</blockquote>
+<h2 id="Postgresql-触发器"><a href="#Postgresql-触发器" class="headerlink" title="Postgresql 触发器"></a>Postgresql 触发器</h2><blockquote>
+<p>触发器是数据库的回调函数，它会在指定的数据库事件发生时自动执行/调用</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>PostgreSQL 触发器 触发情况！<ul>
+<li>在执行操作之前（在检查约束并尝试插入、更新或删除之前）。</li>
+<li>在执行操作之后（在检查约束并插入、更新或删除完成之后）。</li>
+<li>更新操作（在对一个视图进行插入、更新、删除时）</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="Postgresql索引"><a href="#Postgresql索引" class="headerlink" title="Postgresql索引"></a>Postgresql索引</h2><blockquote>
+<p>索引是加速搜索引擎检索数据的一种特殊表查询。简单地说，索引是一个指向表中数据的指针。 方便快速检索数据，<br>创建的索引多了， 也会影响查询效率</p>
+</blockquote>
+<blockquote>
+<p>语法：  使用 CREATE INDEX 语句创建索引，它允许命名索引，指定表及要索引的一列或多列，并指示索引是升序排列还是降序排列。<br>索引也可以是唯一的，与 UNIQUE 约束类似，在列上或列组合上防止重复条目。</p>
+</blockquote>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">创建索引： <span class="keyword">CREATE</span> <span class="keyword">INDEX</span> index_name <span class="keyword">ON</span> table_name;</span><br><span class="line">删除所有： <span class="keyword">drop</span> <span class="keyword">index</span> index_name</span><br></pre></td></tr></table></figure>
+
+<h3 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h3><table>
+<thead>
+<tr>
+<th><strong>类型</strong></th>
+<th align="left"><strong>语法</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单列索引</td>
+<td align="left">CREATE INDEX index_name ON table_name(column_name);</td>
+</tr>
+<tr>
+<td>组合索引</td>
+<td align="left">CREATE INDEX index_name ON table_name(column1_name,column2_name);</td>
+</tr>
+<tr>
+<td>唯一索引</td>
+<td align="left">CREATE UNIQUE INDEX index_name on table_name (column_name);</td>
+</tr>
+<tr>
+<td>局部索引</td>
+<td align="left">CREATE INDEX index_name on table_name (conditional)</td>
+</tr>
+<tr>
+<td>隐式索引</td>
+<td align="left">建表时由数据库服务器自动创建，一般为主键约束和唯一约束</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>不管是单列索引还是组合索引，该索引必须是在WHERE子句的过滤条件中使用非常频繁的列。<br>唯一索引的使用，一方面提高了查询性能，同时也保护了数据的完整性，不允许任何重复的值插入到表中。</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>什么情况下避免使用索引？<ul>
+<li>表数据较小时不需要使用索引</li>
+<li>进行频繁插入或更新操作的表不需要使用</li>
+<li>不应该使用在含有大量的NULL值的列上</li>
+<li>不使用在频繁操作的列上</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">(to_char(now(), &#x27;yyyy-mm-dd&#x27;::text) = to_char(a.&quot;LastTime&quot;, &#x27;yyyy-mm-dd&#x27;::text)</span><br><span class="line"></span><br><span class="line"> <span class="keyword">SELECT</span> a.*,b.wipsn,b.wip <span class="keyword">FROM</span> pvder <span class="keyword">as</span> a <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> <span class="string">&quot;RawData&quot;</span>.<span class="string">&quot;wipCounts&quot;</span> <span class="keyword">as</span> b <span class="keyword">ON</span> <span class="keyword">upper</span>(a.factory) = b.factory </span><br><span class="line"> <span class="keyword">and</span> <span class="keyword">upper</span>(a.customer)=b.customer </span><br><span class="line"> <span class="keyword">and</span> <span class="keyword">upper</span>(a.lineid) =  b.lineid </span><br><span class="line"> <span class="keyword">and</span> <span class="keyword">upper</span>(a.reportprocess) = b.reportprocess</span><br><span class="line"> <span class="keyword">and</span> a.date = b.lasttime <span class="keyword">WHERE</span> a.date =b.lasttime</span><br><span class="line"><span class="comment">----------------------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> a.*,b.wip <span class="keyword">FROM</span> pvder <span class="keyword">as</span> a <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> <span class="string">&quot;RawData&quot;</span>.<span class="string">&quot;wipCount&quot;</span> <span class="keyword">as</span> b <span class="keyword">ON</span> <span class="keyword">upper</span>(a.factory) = b.factory </span><br><span class="line"><span class="keyword">and</span> <span class="keyword">upper</span>(a.customer)=b.customer </span><br><span class="line"><span class="keyword">and</span> <span class="keyword">upper</span>(a.lineid) =  b.lineid </span><br><span class="line"><span class="keyword">and</span> <span class="keyword">upper</span>(a.reportprocess) = b.reportprocess</span><br><span class="line"><span class="keyword">and</span> a.date =to_char(<span class="keyword">now</span>(), <span class="string">&#x27;yyyy-mm-dd&#x27;</span>) <span class="keyword">WHERE</span> a.date = to_char(<span class="keyword">now</span>(), <span class="string">&#x27;yyyy-mm-dd&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+          
+            <div class='article_footer'>
+              
+                
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+<section class="widget copyright  desktop mobile">
+  <div class='content'>
+    
+      <blockquote>
+        
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+          
+        
+          
+            <p>本文永久链接是：<a href=https://dongzhu.ink/archives/bee85523.html>https://dongzhu.ink/archives/bee85523.html</a></p>
+          
+        
+      </blockquote>
+    
+  </div>
+</section>
+
+  
+
+  
+    
+    
+
+<section class="widget qrcode  desktop mobile">
+  
+
+  <div class='content article-entry'>
+    
+      
+        <div class='fancybox'><img src='/img/alipay.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+      
+        <div class='fancybox'><img src='/img/wechat.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+  </div>
+</section>
+
+  
+
+
+              
+            </div>
+          
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-08-08T14:27:37+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2020年8月8日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/postgresql/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>PostgreSql</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://dongzhu.ink/archives/bee85523.html&title=postgresql查询 - 逸枫&summary=
+公司使用的PostgreSql库，学习一下，写一些视图查询， 跟mysql基本上是长不多，在某些地方存在细微差距， 底层原理咋也不过多深入， 满足了工作中日常使用
+
+window安装
+下载地址 https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+下一步，全勾上，设置密码， 去掉勾选，直接点 Finish，完成
+
+设置pgAdmin4 为中文
+点击 file-1-选择语言
+
+创建数据库python操作postgresqlimport psycopg2conn = psycopg2.connect(database=&quot;postgres&quot;, user=&quot;postgres&quot;, password=&quot;123456789&quot;, host=&quot;10.128.212.164&quot;, port=&quot;5432&quot;)cur = conn.cursor()  # 创建指针对象cur.execute(&quot;select * from statu&quot;)results = cur.fetchall()conn.commit()cur.close()conn.close()"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://dongzhu.ink/archives/bee85523.html&title=postgresql查询 - 逸枫&summary=
+公司使用的PostgreSql库，学习一下，写一些视图查询， 跟mysql基本上是长不多，在某些地方存在细微差距， 底层原理咋也不过多深入， 满足了工作中日常使用
+
+window安装
+下载地址 https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+下一步，全勾上，设置密码， 去掉勾选，直接点 Finish，完成
+
+设置pgAdmin4 为中文
+点击 file-1-选择语言
+
+创建数据库python操作postgresqlimport psycopg2conn = psycopg2.connect(database=&quot;postgres&quot;, user=&quot;postgres&quot;, password=&quot;123456789&quot;, host=&quot;10.128.212.164&quot;, port=&quot;5432&quot;)cur = conn.cursor()  # 创建指针对象cur.execute(&quot;select * from statu&quot;)results = cur.fetchall()conn.commit()cur.close()conn.close()"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://dongzhu.ink/archives/bee85523.html&title=postgresql查询 - 逸枫&summary=
+公司使用的PostgreSql库，学习一下，写一些视图查询， 跟mysql基本上是长不多，在某些地方存在细微差距， 底层原理咋也不过多深入， 满足了工作中日常使用
+
+window安装
+下载地址 https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+下一步，全勾上，设置密码， 去掉勾选，直接点 Finish，完成
+
+设置pgAdmin4 为中文
+点击 file-1-选择语言
+
+创建数据库python操作postgresqlimport psycopg2conn = psycopg2.connect(database=&quot;postgres&quot;, user=&quot;postgres&quot;, password=&quot;123456789&quot;, host=&quot;10.128.212.164&quot;, port=&quot;5432&quot;)cur = conn.cursor()  # 创建指针对象cur.execute(&quot;select * from statu&quot;)results = cur.fetchall()conn.commit()cur.close()conn.close()"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png">
+          
+        </a>
+      
+    
+      
+        
+        <div class='hoverbox'>
+          <a class='share'><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/wechat.png"></a>
+          <div class='target'>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPgAAAD4CAAAAADkunTXAAACQ0lEQVR42u3dQW7DMAwEQP//0+0DisBakm5TZnSLE1gcnQiugFxfH7oucHBwcHDwRfCruH688MXz9Hd3+3XrBQcHBwcH3wg/bgAOC39VaPq76gG/3AccHBwcHHwx/LSBmPqcAtv1goODg4ODgx8PBqr7pAcJDg4ODg4O3offBQRpkAAODg4ODg7+XKCQFjw96PizJAUcHBwcHPyN4Ol6KmDoDj5u6wUHBwcHB18E7660oUgv/k0vcHBwcHDwTfBqgzA1qDh971h94ODg4ODgC+HTjUja6HSDiXagAA4ODg4O/o/hpwOCqcFB9wJfeV9wcHBwcPDF8NNGIX2eNj7TFxbAwcHBwcE3wrsFTQUJ3cYoDhTAwcHBwcEXwZ8O7FPQ1EDiZaAADg4ODg7+AfBq41INLNK6HmtgwMHBwcHBF8HTgcRpod1Bx2njAg4ODg4O/onwaiBQPai3CxTAwcHBwcHfGP7bg4JqMJF+fxsogIODg4ODL4R3D2BqUJFeHDgeUICDg4ODgy+GVwcD0/BuQ3QbKICDg4ODgy+Ed59PDxDSIOP2e3BwcHBw8EXw7upeHKg2Iun+4ODg4ODgG+FXcU0H/2mDUg0owMHBwcHBN8KrgXw14O8GCuWLDeDg4ODg4Ivh1QaiGvxXLxKMJyng4ODg4ODgYxcKTt8bvwccHBwcHBx87A9buwcTBx/g4ODg4OCL4WnBU41M9YDShgccHBwcHHwjvNoYpBcDpoOKeGABDg4ODg6+CP5pCxwcHBwcfMH6BjyTBhBzYW/hAAAAAElFTkSuQmCC">
+          </div>
+        </div>
+      
+    
+      
+        <a class="-mob-share-telegram" title="" rel="external nofollow noopener noreferrer noopener"
+          
+            target="_blank" href="https://t.me/share/url?url=https://dongzhu.ink/archives/bee85523.html&text=postgresql查询 - 逸枫"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/placeholder/c617bfd2497fcea598e621413e315c368f8d8e.svg" data-original="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/telegram.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+          <div class="prev-next">
+            
+              <a class='prev' href='/archives/50a9dd25.html'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>TypeScript学习(1)-环境搭建</p>
+                <p class='content'>TypeScript环境安装1.全局安装包scriptnpm install typescript tslint ts-node  -g
+
+2. 项目环境包安装scriptnpm install...</p>
+              </a>
+            
+            
+              <a class='next' href='/archives/2d20ecd4.html'>
+                <p class='title'>koa.js的路由请求（2）<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>koa.js中路由的理解function router(url)&#123;    let page = &#x27;404.html&#x27;    switch(url)&#123;   ...</p>
+              </a>
+            
+          </div>
+        
+      </section>
+    </article>
+  
+
+  
+    
+
+  <article class="post white-box reveal comments shadow">
+    <section class="article typo">
+      <p ct><i class='fas fa-comments'></i> 评论</p>
+      
+      <section id="comments">
+        <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+      </section>
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#window%E5%AE%89%E8%A3%85"><span class="toc-text">window安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AEpgAdmin4-%E4%B8%BA%E4%B8%AD%E6%96%87"><span class="toc-text">设置pgAdmin4 为中文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python%E6%93%8D%E4%BD%9Cpostgresql"><span class="toc-text">python操作postgresql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python-Pandas-%E8%AF%BB%E5%8F%96%E5%92%8C%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">python Pandas 读取和写入数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">读取数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">写入数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LIKE-%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="toc-text">LIKE 模糊查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">%</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-1"><span class="toc-text">_</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-2"><span class="toc-text">[]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-3"><span class="toc-text">[^]</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E6%AE%B5%E6%9F%A5%E8%AF%A2"><span class="toc-text">时间段查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E8%BF%9E%E6%8E%A5"><span class="toc-text">表连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#union%E4%B8%8D%E5%90%88%E5%B9%B6%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE"><span class="toc-text">union不合并重复数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#union%E5%90%88%E5%B9%B6%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE"><span class="toc-text">union合并重复数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#except-%E5%B7%A6%E6%9F%A5%E8%AF%A2%E4%B8%AD%E8%BF%94%E5%9B%9E%E5%8F%B3%E6%9F%A5%E8%AF%A2%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E7%9A%84%E6%89%80%E6%9C%89%E9%9D%9E%E9%87%8D%E5%A4%8D%E5%80%BC"><span class="toc-text">except 左查询中返回右查询没有找到的所有非重复值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#intersect-%E4%B8%A4%E4%B8%AA%E7%BB%93%E6%9E%9C%E9%9B%86%E7%9A%84%E4%BA%A4%E9%9B%86%EF%BC%88%E5%8D%B3%E4%B8%A4%E4%B8%AA%E6%9F%A5%E8%AF%A2%E9%83%BD%E8%BF%94%E5%9B%9E%E7%9A%84%E6%89%80%E6%9C%89%E9%9D%9E%E9%87%8D%E5%A4%8D%E5%80%BC%EF%BC%89"><span class="toc-text">intersect 两个结果集的交集（即两个查询都返回的所有非重复值）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-text">关联查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%B4%E6%97%B6%E8%A1%A8%E6%9F%A5%E8%AF%A2-whit"><span class="toc-text">创建临时表查询 whit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E5%BA%8FORDER-BY"><span class="toc-text">排序ORDER BY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E6%9F%A5%E8%AF%A2-%E5%88%86%E7%BB%84"><span class="toc-text">聚合查询,分组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84-%E8%81%9A%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-text">常用的 聚合查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HAVING-%E7%AD%9B%E9%80%89"><span class="toc-text">HAVING 筛选</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Postgresql-%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-text">Postgresql 子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%9B%86"><span class="toc-text">函数集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-text">常用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#initcap-%E9%A6%96%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%86%99"><span class="toc-text">initcap(首字母大写)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lower-%E5%AD%97%E6%AF%8D%E5%85%A8%E9%83%A8%E5%B0%8F%E5%86%99"><span class="toc-text">lower(字母全部小写)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#upper-%E5%AD%97%E6%AF%8D%E5%85%A8%E9%83%A8%E5%A4%A7%E5%86%99"><span class="toc-text">upper(字母全部大写)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="toc-text">日期函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#now-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F"><span class="toc-text">now() 获取当前日期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#localtime-%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4-SELECT-localtime"><span class="toc-text">localtime 当前时间 SELECT localtime</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#localtimestamp-%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4-SELECT-localtimestamp"><span class="toc-text">localtimestamp 当前日期和时间 SELECT localtimestamp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#current-date-%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F-select-current-date"><span class="toc-text">current_date 当前日期 select current_date;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#timeofday-%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4"><span class="toc-text">timeofday()当前日期和时间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#age-%E8%AE%A1%E7%AE%972%E4%B8%AA%E6%97%B6%E9%97%B4%E5%B7%AE"><span class="toc-text">age() 计算2个时间差</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EXTRACT-field-FROM-source-%E6%97%B6%E9%97%B4%E5%AD%97%E6%AE%B5%E6%88%AA%E5%8F%96"><span class="toc-text">EXTRACT(field FROM source)时间字段截取</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="toc-text">转换函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#to-number-%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AD%97%E7%AC%A6-%E5%B0%86%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%95%B0%E5%80%BC"><span class="toc-text">to_number(数值类型的字符):将字符转换为数值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#to-char-%E6%95%B0%E5%80%BC%E6%88%96%E8%80%85%E6%98%AF%E6%97%A5%E6%9C%9F-%E5%B0%86%E6%95%B0%E5%80%BC%E6%88%96%E8%80%85%E6%97%A5%E6%9C%9F%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6"><span class="toc-text">to_char(数值或者是日期):将数值或者日期转换为字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#to-date-%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E7%9A%84%E5%AD%97%E7%AC%A6-%EF%BC%9A%E5%B0%86%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%97%A5%E6%9C%9F"><span class="toc-text">to_date(日期格式的字符)：将字符转换为日期</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0"><span class="toc-text">自定义函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-text">函数基本语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86"><span class="toc-text">自定义函数整理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E4%B8%BA%E5%AD%98%E6%95%B0%E5%AD%97%E5%87%BD%E6%95%B0"><span class="toc-text">判断为存数字函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ALTER-TABLE-%E6%9B%BE%E5%88%A0%E8%A1%A8%E7%9A%84%E5%88%97"><span class="toc-text">ALTER TABLE 曾删表的列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE"><span class="toc-text">视图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-text">事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Postgresql-%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-text">Postgresql 触发器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Postgresql%E7%B4%A2%E5%BC%95"><span class="toc-text">Postgresql索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8B"><span class="toc-text">索引类型</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget category shadow desktop">
+    
+  <header>
+    
+      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
+    
+  </header>
+
+
+    <div class='content'>
+      <ul class="entry navigation">
+        
+          <li><a class="flat-box"
+            title="/categories/%E5%89%8D%E7%AB%AF/" href="/categories/%E5%89%8D%E7%AB%AF/"
+            id="categoriesE5898DE7ABAF"
+            ><div class='name'>前端</div><div class='badge'>(16)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/categories/%E5%89%8D%E7%AB%AF/typescript/" href="/categories/%E5%89%8D%E7%AB%AF/typescript/"
+            id="categoriesE5898DE7ABAFtypescript"
+            ><div class='name'>Typescript</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/%E5%90%8E%E7%AB%AF/" href="/categories/%E5%90%8E%E7%AB%AF/"
+            id="categoriesE5908EE7ABAF"
+            ><div class='name'>后端</div><div class='badge'>(4)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/categories/%E5%90%8E%E7%AB%AF/node/" href="/categories/%E5%90%8E%E7%AB%AF/node/"
+            id="categoriesE5908EE7ABAFnode"
+            ><div class='name'>node</div><div class='badge'>(3)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/%E5%B7%A5%E5%85%B7/" href="/categories/%E5%B7%A5%E5%85%B7/"
+            id="categoriesE5B7A5E585B7"
+            ><div class='name'>工具</div><div class='badge'>(7)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"
+            id="categoriesE695B0E68DAEE5BA93"
+            ><div class='name'>数据库</div><div class='badge'>(3)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/postgresql/" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/postgresql/"
+            id="categoriesE695B0E68DAEE5BA93postgresql"
+            ><div class='name'>PostgreSql</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE/" href="/categories/%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE/"
+            id="categoriesE7BD91E7AB99E5BBBAE8AEBE"
+            ><div class='name'>网站建设</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/categories/%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE/hexo/" href="/categories/%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE/hexo/"
+            id="categoriesE7BD91E7AB99E5BBBAE8AEBEhexo"
+            ><div class='name'>hexo</div><div class='badge'>(1)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow desktop mobile">
+    
+  <header>
+    
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+    
+  </header>
+
+
+    <div class='content'>
+      <a href="/tags/linux/" style="font-size: 17.33px; color: #828282">Linux</a> <a href="/tags/mysql/" style="font-size: 17.33px; color: #828282">MySql</a> <a href="/tags/postgresql/" style="font-size: 14px; color: #999">PostgreSql</a> <a href="/tags/python/" style="font-size: 20.67px; color: #6c6c6c">Python</a> <a href="/tags/react/" style="font-size: 17.33px; color: #828282">React</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">Redis</a> <a href="/tags/typescript/" style="font-size: 14px; color: #999">TypeScript</a> <a href="/tags/css/" style="font-size: 20.67px; color: #6c6c6c">css</a> <a href="/tags/html/" style="font-size: 17.33px; color: #828282">html</a> <a href="/tags/javascript/" style="font-size: 24px; color: #555">javaScript</a> <a href="/tags/koa-js/" style="font-size: 17.33px; color: #828282">koa.js</a> <a href="/tags/node-js/" style="font-size: 20.67px; color: #6c6c6c">node.js</a> <a href="/tags/npm/" style="font-size: 14px; color: #999">npm</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/vue/" style="font-size: 20.67px; color: #6c6c6c">vue</a> <a href="/tags/webpack/" style="font-size: 17.33px; color: #828282">webpack</a> <a href="/tags/%E4%BB%8B%E7%BB%8D/" style="font-size: 17.33px; color: #828282">介绍</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 14px; color: #999">前端</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 17.33px; color: #828282">博客</a> <a href="/tags/%E6%94%B6%E8%97%8F/" style="font-size: 17.33px; color: #828282">收藏</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 17.33px; color: #828282">爬虫</a> <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 17.33px; color: #828282">环境配置</a>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget related_posts shadow desktop mobile">
+    
+  <header>
+    
+      <i class="fas fa-bookmark fa-fw" aria-hidden="true"></i><span class='name'>相关文章</span>
+    
+  </header>
+
+
+    <div class="content">
+      
+    </div>
+  </section>
+
+
+  
+
+  
+
+  
+    
+    
+
+<section class="widget shadow desktop">
+  
+  <header>
+    
+      <i class="fas fa-award fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
+    
+  </header>
+
+
+  <div class='content'>
+    <div class="webinfo">
+      
+        <div class="webinfo-item">
+          <div>文章数目：</div>
+          <div>33 篇</div>
+        </div>
+      
+
+      
+        <div class="webinfo-item">
+          <div>已运行时间：</div>
+          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
+        </div>
+        <script>
+          var BirthDay = new Date(new Date('2020/01/01'));
+          var today = new Date();
+          var timeold = (today.getTime() - BirthDay.getTime());
+          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
+          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
+        </script>
+      
+
+
+      
+
+      
+        <div class="webinfo-item">
+          <div>本站访客数：</div>
+          <div><span id="busuanzi_value_site_uv"><i class="fas fa-fan fa-spin fa-fw" aria-hidden="true"></i></span> 人</div>
+        </div>
+      
+
+      
+        <div class="webinfo-item">
+          <div>本站总访问量：</div>
+          <div><span id="busuanzi_value_site_pv"><i class="fas fa-fan fa-spin fa-fw" aria-hidden="true"></i></span> 次</div>
+        </div>
+      
+
+      
+        
+          
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+
+          
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/locale/zh-cn.min.js"></script>
+
+        
+        <div class="webinfo-item">
+          <div>最后活动时间：</div>
+          
+            <div id="last-update" style="display: none;">Sat Aug 08 2020 16:37:10 GMT+0800 (GMT+08:00)</div>
+            <div id="last-update-show">2020-08-08 日</div>
+          
+        </div>
+        
+        <script>
+          var lastUpDate = document.getElementById('last-update').innerHTML;
+          try {
+            document.getElementById('last-update-show').innerHTML = moment(new Date(lastUpDate)).fromNow();
+          } catch (error) {
+            document.getElementById('last-update-show').innerHTML = '2020-08-08 日';
+          }
+        </script>
+        
+      
+    </div>
+  </div>
+</section>
+
+  
+
+
+</aside>
+
+
+
+    </div>
+    
+  
+  <footer class="clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='533953408'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/search.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="mailto:1010227175@qq.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="https://github.com/YouAge"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/playlist?id=533953408"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        本站使用
+        <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a>
+        作为主题，总访问量为
+          <span id="busuanzi_value_site_pv"><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+          次
+        
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2018-2020 master Teams</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <div>
+    
+      
+  
+
+  <div id="rightmenu-wrapper">
+    <ul class="list-v rightmenu" id="rightmenu-content">
+      <li class='option'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-text' onclick='document.execCommand("copy")'><i class='fa fa-copy fa-fw'></i>复制文本</a>
+        <hr id='hr-text'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-href'><i class='fa fa-link fa-fw'></i>复制链接</a>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-open-href'><i class='fa fa-external-link-square-alt fa-fw'></i>在新标签页打开</a>
+        <hr id='hr-href'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-src'><i class='fa fa-image fa-fw'></i>复制图片地址</a>
+        <hr id='hr-src'>
+      </li>
+      <li class='navigation'>
+        <a class='nav icon-only fix-cursor-default' onclick='history.back()'><i class='fa fa-arrow-left fa-fw'></i></a>
+        <a class='nav icon-only fix-cursor-default' onclick='history.forward()'><i class='fa fa-arrow-right fa-fw'></i></a>
+        <a class='nav icon-only fix-cursor-default' onclick='window.location.reload()'><i class='fa fa-redo fa-fw'></i></a>
+        <a class='nav icon-only fix-cursor-default' href='/'><i class='fa fa-home fa-fw'></i></a>
+      </li>
+      <hr>
+      
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=/archives/
+        
+        
+        
+        
+          id="archives"
+        >
+        <i class='fas fa-archive fa-fw'></i> 时间轴
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=/blog/tags/
+        
+        
+        
+        
+          id="blogtags"
+        >
+        <i class='fas fa-tags fa-fw'></i> 文章标签
+      </a>
+    </li>
+  
+        
+      
+        
+      
+        
+          <hr>
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=https://github.com/YouAge/MyHexoBlog/tree/master/hexo-theme-volantis
+        
+        
+        
+        
+          id="https:githubcomYouAgeMyHexoBlogtreemasterhexo-theme-volantis"
+        >
+        <i class='fa fa-code-branch fa-fw'></i> 本站源码
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=https://github.com/volantis-x/hexo-theme-volantis/
+        
+        
+        
+        
+          id="https:githubcomvolantis-xhexo-theme-volantis"
+        >
+        <i class='fa fa-code-branch fa-fw'></i> 主题源码
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' 
+        
+        
+        
+          onclick="document.execCommand('print')"
+        
+        >
+        <i class='fa fa-print fa-fw'></i> 打印页面
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          <li class='music name'>
+            <p class='nav music-title fix-cursor-default'></p>
+          </li>
+          <li class='music ctrl'>
+            <a class='nav icon-only backward fix-cursor-default' onclick='aplayerBackward()'><i class='fa fa-step-backward fa-fw'></i></a>
+            <a class='nav icon-only toggle fix-cursor-default' onclick='aplayerToggle()'><i class='fa fa-play fa-fw'></i></a>
+            <a class='nav icon-only forward fix-cursor-default' onclick='aplayerForward()'><i class='fa fa-step-forward fa-fw'></i></a>
+          </li>
+          <li class='music volume'>
+            <a class='nav volume'>
+              <div class="aplayer-volume-bar-wrap">
+                <div class="aplayer-volume-bar fix-cursor-pointer">
+                  <div class="aplayer-volume"></div>
+                  <i class='left fa fa-volume-off fa-fw'></i>
+                  <i class='right fa fa-volume-up fa-fw'></i>
+                </div>
+              </div>
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+  <script>
+    window.document.oncontextmenu = function (event) {
+      if (event.ctrlKey) return true;
+      if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true;
+      return popMenu(event);
+    };
+    document.addEventListener("click", function (event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      mymenu.style.display = "none";
+    });
+    function popMenu(event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      var menuContent = document.getElementById('rightmenu-content');
+      var screenWidth = document.documentElement.clientWidth || document.body.clientWidth;
+      var screenHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      mymenu.style.left = event.clientX + "px"; // 获取鼠标位置
+      mymenu.style.top = event.clientY + "px";
+      mymenu.style.display = 'block';
+      if (event.clientX * 2 > screenWidth) {
+        menuContent.classList.add('left');
+      } else {
+        menuContent.classList.remove('left');
+      }
+      if (event.clientY * 2 > screenHeight) {
+        menuContent.classList.add('top');
+      } else {
+        menuContent.classList.remove('top');
+      }
+
+      let hrText = document.getElementById('hr-text');
+      let hrSrc = document.getElementById('hr-src');
+      let hrHref = document.getElementById('hr-href');
+
+      // 选中图片
+      let copySrc = document.getElementById('menu-copy-src');
+      if (copySrc != undefined) {
+        if (event.target.currentSrc) {
+          copySrc.style.display = 'block';
+          copySrc.addEventListener("click", function (e) {
+            copyString(event.target.currentSrc);
+          },{once: true});
+          hrSrc.style.display = 'block';
+        } else {
+          copySrc.style.display = 'none';
+          hrSrc.style.display = 'none';
+        }
+      }
+
+      // 选中按钮
+      // 判断是不是按钮
+      let href = '';
+      if (event.path) {
+        for (i = 0; i < event.path.length; i++) {
+          if (event.path[i].href != undefined && event.path[i].href.length > 0) {
+            href = event.path[i].href;
+          }
+        }
+      }
+
+      let copyText = document.getElementById('menu-copy-text');
+      copyText.style.display = 'none';
+      hrText.style.display = 'none';
+      if (href.length == 0) {
+        // 选中文本
+        if (window.getSelection().toString()) {
+          copyText.style.display = 'block';
+          hrText.style.display = 'block';
+        }
+      }
+
+      // 在新标签页打开
+      let openHref = document.getElementById('menu-open-href');
+      if (openHref != undefined) {
+        if (href.length > 0) {
+          openHref.style.display = 'block';
+          openHref.addEventListener("click", function (e) {
+            window.open(href);
+          },{once: true});
+          hrHref.style.display = 'block';
+        } else {
+          openHref.style.display = 'none';
+          hrHref.style.display = 'none';
+        }
+      }
+      // 复制链接
+      let copyHref = document.getElementById('menu-copy-href');
+      if (copyHref != undefined) {
+        if (href.length > 0) {
+          copyHref.style.display = 'block';
+          copyHref.addEventListener("click", function (e) {
+            copyString(href);
+          },{once: true});
+        } else {
+          copyHref.style.display = 'none';
+        }
+      }
+
+      // 有音乐播放器
+      if (true == true) {
+        // 如果有aplayer，初始化一下
+      	try {
+      		checkAPlayer();
+          updateTitle();
+      	} catch (error) {
+      		console.log(error);
+      	}
+      }
+
+      return false; // 该行代码确保系统自带的右键菜单不会被调出
+    }
+    function hideMenu() {
+      document.getElementById('rightmenu-wrapper').style.display = 'none';
+    }
+    function copyString(str) {
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      document.body.appendChild(input);
+      input.setAttribute('value', str);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    }
+    document.execCommand('click');
+  </script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+
+
+  <script>
+    
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/" || "/";
+    if (!ROOT.endsWith('/')) ROOT += '/';
+  </script>
+
+
+
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@2/js/instant_page.js" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+
+
+
+  
+  
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        var imgs=["/img/banner/7.jpg"];
+        if ('true' == 'true') {
+          function shuffle(arr){
+            /*From countercurrent-time*/
+            var n = arr.length;
+            while(n--) {
+              var index = Math.floor(Math.random() * n);
+              var temp = arr[index];
+              arr[index] = arr[n];
+              arr[n] = temp;
+            }
+          }
+          shuffle(imgs);
+        }
+        if ('.cover') {
+          $('.cover').backstretch(
+            imgs,
+          {
+            duration: "20000",
+            fade: "1500"
+          });
+        } else {
+          $.backstretch(
+            imgs,
+          {
+            duration: "20000",
+            fade: "1500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+  <script>
+    let APlayerController = new Object();
+    APlayerController.id = '533953408';  // 设定全局音乐播放ID
+    APlayerController.volume = '0.7';
+  </script>
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
+
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js"></script>
+
+  
+    
+<script src="/js/aplayer.js"></script>
+
+  
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  var GUEST_INFO = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link'.split(',').filter(function (item) {
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var REQUIRED_FIELDS = ['nick', 'mail', 'link'];
+  var requiredFields = 'nick,mail'.split(',').filter(function (item) {
+    return REQUIRED_FIELDS.indexOf(item) > -1
+  });
+
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+
+  function pjax_valine() {
+    let pageUrl = $.trim($('#pjax-comment-path').text()) === "none" ? 
+      decodeURI(window.location.pathname) : $.trim($('#pjax-comment-path').text());
+    let pagePlaceholder = $.trim($('#pjax-comment-placeholder').text()) === "none" ?
+      "" : $.trim($('#"pjax-comment-placeholder').text());
+
+    let ALLPATH = '';
+    if(ALLPATH != '') pageUrl = ALLPATH;
+
+    var valine = new Valine();
+    valine.init({
+      el: '#valine_container',
+      meta: meta,
+      placeholder: pagePlaceholder,
+      path: pageUrl,
+      appId: "YBusDOkP8J9oyGYyYw5hRjyF-gzGzoHsz",
+      appKey: "ajaEnUBxE0LpSlSDnjKNzKSS",
+      pageSize: '10',
+      avatar: 'robohash',
+      lang: 'zh-cn',
+      visitor: 'true',
+      highlight: 'true',
+      mathJax: 'false',
+      enableQQ: 'true',
+      requiredFields: requiredFields,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps
+    })
+  }
+
+  $(function () {
+    pjax_valine();
+  });
+</script>
+
+
+
+
+<!-- darkmodejs -->
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5/lib/darkmode-js.min.js" aysc></script>
+
+  <script type="text/javascript">
+	function getClientHeight(){
+	  var clientHeight=0;
+	  if(document.body.clientHeight&&document.documentElement.clientHeight){
+	  var clientHeight = (document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
+	  }else{
+	  var clientHeight = (document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
+	  }
+	  return clientHeight;
+	}
+	function supportCss3(style) {
+		var prefix = ['webkit', 'Moz', 'ms', 'o'],
+		i,
+		humpString = [],
+		htmlStyle = document.documentElement.style,
+		_toHumb = function (string) {
+		return string.replace(/-(\w)/g, function ($0, $1) {
+		return $1.toUpperCase();
+		});
+		};
+		for (i in prefix)
+		humpString.push(_toHumb(prefix[i] + '-' + style));
+		humpString.push(_toHumb(style));
+		for (i in humpString)
+		if (humpString[i] in htmlStyle) return true;
+		return false;
+	};
+	//配置信息
+	var options = {
+	  bottom: '32px',
+	  right: 'unset',
+	  left: '16px',
+	  time: '0s',
+	  mixColor: '#f4f4f4',
+	  backgroundColor: '#f4f4f4',
+	  buttonColorDark: '#100f2c',
+	  buttonColorLight: '#f4f4f4',
+	  saveInCookies: true,
+	  label: '🌓',
+	  autoMatchOsTheme: true
+	};
+	// 卡片兼容处理 mix-blend-mode 与 effect: [shadow, floatable, blur] 冲突???
+	function pjax_darkmodejs(){
+		
+	}
+	// mix-blend-mode support?
+	if(supportCss3('mix-blend-mode')){
+		const darkmode = new Darkmode(options);
+		darkmode.showWidget();
+		pjax_darkmodejs();
+	}
+  </script>
+
+
+<!-- 复制 -->
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+</script>
+
+
+<!-- scrollreveal -->
+
+<!-- ******************************** -->
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  function pjax_fancybox() {
+    $(".article-entry").find("img").not('.inline').not('a img').each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".article-entry").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  $(function () {
+    pjax_fancybox();
+  });
+</script>
+
+<!-- ******************************** -->
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+
+  
+    
+<script src="/js/search.js"></script>
+
+  
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js" data-pjax></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@2/js/comment_typing.js"></script>
+
+
+
+
+
+
+
+    
+      
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+    <div id="loading-bar-wrapper"><script>NProgress.configure({parent:"#loading-bar-wrapper",trickleSpeed: 100})</script></div>
+    <script>
+      window.ShowLoading = function() {
+        NProgress.start();
+      };
+      window.HideLoading = function() {
+        NProgress.done();
+      }
+    </script>
+  
+</div>
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+      $.fancybox.close();    // 关闭弹窗
+      $('.l_header .switcher .s-search').removeClass('active'); // 关闭移动端激活的搜索框
+      $('.l_header').removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      $('.wrapper').removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      $('.s-top').unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+      window.ShowLoading();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      // 关于百度统计对 SPA 页面的处理：
+      // 方案一：百度统计>管理>单页应用设置中，打开开启按钮即可对SPA进行统计。 https://tongji.baidu.com/web/help/article?id=324
+      // 方案二：取消注释下列代码。 https://tongji.baidu.com/web/help/article?id=235
+      // 
+
+      // 关于谷歌统计对 SPA 页面的处理：
+      // 当应用以动态方式加载内容并更新地址栏中的网址时，也应该更新通过 gtag.js 存储的网页网址。
+      // https://developers.google.cn/analytics/devguides/collection/gtagjs/single-page-applications?hl=zh-cn
+      
+
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+
+      try{
+        pjax_fancybox();
+        
+          
+          if ('.cover') {
+            $('.cover').backstretch("resize");
+          } else {
+            $.backstretch("resize");
+          }
+        
+        
+        
+        
+          pjax_initCopyCode();
+        
+        
+          pjax_valine();
+        
+        
+        
+        
+        
+          pjax_darkmodejs();
+        
+      } catch (e) {
+        console.log(e);
+      }
+      window.HideLoading();
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+      window.HideLoading();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+
+    
+  </div>
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: true,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+</html>
