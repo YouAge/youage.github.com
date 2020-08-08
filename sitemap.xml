@@ -291,21 +291,7 @@
   </url>
   
   <url>
-    <loc>https://dongzhu.ink/tags/css/</loc>
-    <lastmod>2020-08-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://dongzhu.ink/tags/javascript/</loc>
-    <lastmod>2020-08-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://dongzhu.ink/tags/vue/</loc>
     <lastmod>2020-08-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -319,6 +305,20 @@
   </url>
   
   <url>
+    <loc>https://dongzhu.ink/tags/css/</loc>
+    <lastmod>2020-08-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://dongzhu.ink/tags/vue/</loc>
+    <lastmod>2020-08-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://dongzhu.ink/tags/html/</loc>
     <lastmod>2020-08-08</lastmod>
     <changefreq>daily</changefreq>
@@ -326,14 +326,14 @@
   </url>
   
   <url>
-    <loc>https://dongzhu.ink/tags/python/</loc>
+    <loc>https://dongzhu.ink/tags/linux/</loc>
     <lastmod>2020-08-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://dongzhu.ink/tags/linux/</loc>
+    <loc>https://dongzhu.ink/tags/python/</loc>
     <lastmod>2020-08-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -475,6 +475,13 @@
   </url>
   
   <url>
+    <loc>https://dongzhu.ink/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/postgresql/</loc>
+    <lastmod>2020-08-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://dongzhu.ink/categories/%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE/hexo/</loc>
     <lastmod>2020-08-08</lastmod>
     <changefreq>daily</changefreq>
@@ -490,13 +497,6 @@
   
   <url>
     <loc>https://dongzhu.ink/categories/%E5%90%8E%E7%AB%AF/node/</loc>
-    <lastmod>2020-08-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://dongzhu.ink/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/postgresql/</loc>
     <lastmod>2020-08-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

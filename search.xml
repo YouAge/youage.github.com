@@ -367,9 +367,9 @@
       
         <tags>
             
-            <tag> css </tag>
-            
             <tag> javaScript </tag>
+            
+            <tag> css </tag>
             
             <tag> html </tag>
             
@@ -598,13 +598,13 @@
       
         <tags>
             
-            <tag> css </tag>
-            
             <tag> javaScript </tag>
             
-            <tag> vue </tag>
-            
             <tag> React </tag>
+            
+            <tag> css </tag>
+            
+            <tag> vue </tag>
             
             <tag> html </tag>
             
@@ -675,9 +675,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Python </tag>
             
             <tag> shell </tag>
             
